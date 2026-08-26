@@ -15,7 +15,7 @@ const stats = [
 export function Hero() {
   return (
     <section id="top" className="relative w-full scroll-mt-24">
-      <div className="relative h-[560px] overflow-hidden md:h-[680px]">
+      <div className="relative h-140 overflow-hidden md:h-170">
         <Image
           src="/gallery/toko.jpg"
           alt="Suasana toko AIS Frozen Food dengan rak beku berisi aneka frozen food"
@@ -28,7 +28,7 @@ export function Hero() {
         {/* Legibility scrim */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-espresso-950/90 via-espresso-950/45 to-espresso-950/35"
+          className="absolute inset-0 bg-linear-to-t from-espresso-950/90 via-espresso-950/45 to-espresso-950/35"
         />
 
         {/* Overlay content */}

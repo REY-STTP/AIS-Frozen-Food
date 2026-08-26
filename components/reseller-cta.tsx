@@ -16,18 +16,18 @@ export function ResellerCTA() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.7, ease }}
-        className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-espresso-800 px-6 py-14 text-center md:px-12"
+        className="relative mx-auto max-w-6xl overflow-hidden rounded-4xl bg-espresso-800 px-6 py-14 text-center md:px-12"
       >
         {/* Decorative snowflakes */}
         <Snowflake
           aria-hidden
           size={120}
-          className="pointer-events-none absolute -left-8 -top-8 text-cream-100/[0.06]"
+          className="pointer-events-none absolute -left-8 -top-8 text-cream-100/6"
         />
         <Snowflake
           aria-hidden
           size={160}
-          className="pointer-events-none absolute -bottom-10 -right-10 text-cream-100/[0.05]"
+          className="pointer-events-none absolute -bottom-10 -right-10 text-cream-100/5"
         />
 
         <div className="relative mx-auto max-w-2xl">

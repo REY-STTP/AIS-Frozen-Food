@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { categories, featuredProducts, type CategoryId } from "@/lib/products";
-import { cn } from "@/lib/utils";
 
 const categoryName = (id: CategoryId) =>
   categories.find((c) => c.id === id)?.name ?? "";

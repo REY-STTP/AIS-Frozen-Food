@@ -81,7 +81,7 @@ export function ProductShowcase() {
                 key={g.imageNo}
                 className="group flex w-full flex-col overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
               >
-                <div className="relative aspect-[3/4] overflow-hidden border-b border-sand-300/70">
+                <div className="relative aspect-3/4 overflow-hidden border-b border-sand-300/70">
                   <Image
                     src={`/products/produk-${g.imageNo}.jpg`}
                     alt={`Poster produk ${g.title} AIS Frozen Food`}
