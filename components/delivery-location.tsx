@@ -99,7 +99,7 @@ export function DeliveryLocation() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, delay: 0.1, ease }}
-          className="relative min-h-[360px] flex-1 overflow-hidden rounded-[2rem] border border-sand-300 bg-cream-50 shadow-md lg:min-h-[560px]"
+          className="relative min-h-90 flex-1 overflow-hidden rounded-4xl border border-sand-300 bg-cream-50 shadow-md lg:min-h-140"
         >
           <iframe
             title="Peta lokasi AIS Frozen Food"
