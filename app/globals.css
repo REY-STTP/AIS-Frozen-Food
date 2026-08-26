@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-playfair), ui-serif, Georgia, serif;
+
+  /* Warm cream surfaces */
+  --color-cream-50: #fdfbf5;
+  --color-cream-100: #f5f1e8;
+  --color-sand-200: #ebe4d6;
+  --color-sand-300: #ddd2bd;
+  --color-sand-400: #c9b99e;
+
+  /* Cocoa accent scale */
+  --color-cocoa-100: #efe2da;
+  --color-cocoa-200: #dcc4b6;
+  --color-cocoa-300: #c19a83;
+  --color-cocoa-400: #a3765f;
+  --color-cocoa-500: #8a5c46;
+  --color-cocoa-600: #7b4f3b;
+  --color-cocoa-700: #5c3a2a;
+  --color-cocoa-800: #45291d;
+
+  /* Deep espresso for text & footer */
+  --color-espresso-700: #4a362b;
+  --color-espresso-800: #3b2a22;
+  --color-espresso-900: #2b1e17;
+  --color-espresso-950: #211612;
+
+  --color-ink-muted: #6d5c50;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-cream-100);
+    color: var(--color-espresso-900);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Subtle grain overlay to break digital flatness */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cocoa-600);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background-color: var(--color-cocoa-600);
+    color: var(--color-cream-50);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

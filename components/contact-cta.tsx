@@ -1,0 +1,43 @@
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { WA_MESSAGES, waLink, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
+
+export function ContactCTA() {
+  const reduce = useReducedMotion();
+  const ease = [0.16, 1, 0.3, 1] as const;
+
+  return (
+    <section className="bg-cream-100 px-4 py-20 md:px-12 md:py-28">
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.7, ease }}
+        className="mx-auto max-w-2xl text-center"
+      >
+        <div aria-hidden className="mb-4 flex items-center justify-center gap-4">
+          <span className="h-px w-12 bg-cocoa-600" />
+          <span className="h-2 w-2 rotate-45 bg-cocoa-600" />
+          <span className="h-px w-12 bg-cocoa-600" />
+        </div>
+        <h2 className="font-display text-3xl font-bold italic leading-tight text-espresso-800 sm:text-4xl md:text-5xl">
+          Siap pesan frozen food?
+        </h2>
+        <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-ink-muted md:text-base">
+          Hubungi AIS Frozen Food untuk cek produk, harga, dan ketersediaan.
+          Kami balas secepatnya setiap hari.
+        </p>
+        <div className="mt-9 flex flex-col items-center gap-4">
+          <WhatsAppButton href={waLink(WA_MESSAGES.contact)} size="lg">
+            Chat WhatsApp
+          </WhatsAppButton>
+          <p className="text-sm tracking-wide text-ink-muted">
+            {WHATSAPP_DISPLAY}
+          </p>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

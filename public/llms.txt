@@ -1,0 +1,29 @@
+# AIS Frozen Food
+
+AIS Frozen Food adalah toko frozen food (makanan beku) di Margorejo, Pati, Jawa Tengah, Indonesia.
+
+## Ringkasan
+Toko frozen food lokal yang menyediakan aneka camilan beku untuk kebutuhan rumah, warung, reseller, dan pembelian grosir. Pesanan bisa diambil langsung di toko atau dipesan antar ke area Pati–Kudus. Pemesanan dilakukan via WhatsApp.
+
+## Produk
+- Dimsum: ayam ori, ayam keju, ayam jamur, kepiting, udang, cumi, ayam pedas, roll tuna, ekado.
+- Aneka siap goreng: singkong keju, gemblong cotot, timusku.
+- Aneka lumer: pisang coklat (lumer, keju, oreo, milo), nangka coklat.
+- Cilok & cireng: cimol kopong, cimol keju, cilok bumbu kacang, cireng kriwil, cireng sambal rujak.
+- Pelengkap: saus mentai (250gr/500gr/1kg), sushi nori (roasted seaweed), rice paper (kulit lumpia).
+
+## Layanan
+- Ambil di toko: Lumpur, Bumirejo, Kec. Margorejo, Kab. Pati, Jawa Tengah.
+- Pesan antar: area Pati dan Kudus.
+- Reseller & grosir: harga khusus untuk pembelian jumlah banyak.
+
+## Jam Operasional
+Setiap hari, 08.00–20.00 WIB.
+
+## Kontak
+- WhatsApp: 0852-2612-2121 (https://wa.me/6285226122121)
+- TikTok: @ais.frozen.food (https://www.tiktok.com/@ais.frozen.food)
+- Google Maps: https://www.google.com/maps/search/?api=1&query=Lumpur+Bumirejo+Margorejo+Pati
+
+## Situs Web
+https://www.ais-frozen-food.vercel.app
