@@ -26,4 +26,4 @@ Setiap hari, 08.00–20.00 WIB.
 - Google Maps: https://www.google.com/maps/search/?api=1&query=Lumpur+Bumirejo+Margorejo+Pati
 
 ## Situs Web
-https://www.ais-frozen-food.vercel.app
+https://www.ais-frozen-food.web.id

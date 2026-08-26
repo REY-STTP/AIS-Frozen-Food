@@ -16,13 +16,18 @@ export function LocalBusinessJsonLd() {
     url: SITE,
     telephone: `+${WHATSAPP_NUMBER}`,
     priceRange: "$$",
-    image: products.map((p) => `${SITE}${p.image}`),
+    image: Array.from(new Set(products.map((p) => `${SITE}${p.image}`))),
     address: {
       "@type": "PostalAddress",
       streetAddress: business.addressShort,
       addressLocality: "Margorejo",
       addressRegion: "Jawa Tengah",
       addressCountry: "ID",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: business.geo.lat,
+      longitude: business.geo.lng,
     },
     areaServed: business.serviceArea.split("–").map((s) => s.trim()),
     openingHoursSpecification: [
