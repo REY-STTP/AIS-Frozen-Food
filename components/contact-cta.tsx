@@ -11,10 +11,10 @@ export function ContactCTA() {
   return (
     <section className="bg-cream-100 px-4 py-20 md:px-12 md:py-28">
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={reduce ? false : { opacity: 0, y: 16, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.7, ease }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] as const }}
         className="mx-auto max-w-2xl text-center"
       >
         <div aria-hidden className="mb-4 flex items-center justify-center gap-4">
@@ -29,14 +29,18 @@ export function ContactCTA() {
           Hubungi AIS Frozen Food untuk cek produk, harga, dan ketersediaan.
           Kami balas secepatnya setiap hari.
         </p>
-        <div className="mt-9 flex flex-col items-center gap-4">
+        <motion.div
+          className="mt-9 flex flex-col items-center gap-4"
+          animate={reduce ? undefined : { scale: [1, 1.015, 1] }}
+          transition={reduce ? undefined : { duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1.5 }}
+        >
           <WhatsAppButton href={waLink(WA_MESSAGES.contact)} size="lg">
             Chat WhatsApp
           </WhatsAppButton>
           <p className="text-sm tracking-wide text-espresso-700">
             {WHATSAPP_DISPLAY}
           </p>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

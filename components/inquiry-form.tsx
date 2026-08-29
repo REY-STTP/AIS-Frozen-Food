@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { waLink } from "@/lib/whatsapp";
 
@@ -8,6 +9,7 @@ export function InquiryForm() {
   const [name, setName] = useState("");
   const [wa, setWa] = useState("");
   const [note, setNote] = useState("");
+  const reduce = useReducedMotion();
 
   const href = waLink(
     `Halo AIS Frozen Food, saya ${name || "[Nama]"} (${wa || "[WA]"}) ingin tanya: ${note || "cek produk & harga"}. Mohon info.`,
@@ -15,7 +17,13 @@ export function InquiryForm() {
 
   return (
     <section className="bg-cream-100 px-4 py-16 md:px-12 md:py-20">
-      <div className="mx-auto max-w-xl rounded-2xl border border-sand-300 bg-white p-6 shadow-sm md:p-8">
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+        className="mx-auto max-w-xl rounded-2xl border border-sand-300 bg-white p-6 shadow-sm md:p-8"
+      >
         <h2 className="font-display text-2xl font-bold text-espresso-800">Tanya stok & harga</h2>
         <p className="mt-2 text-sm leading-relaxed text-espresso-700">
           Isi form singkat, lalu kami buka WhatsApp dengan pesan otomatis — tinggal kirim.
@@ -59,17 +67,20 @@ export function InquiryForm() {
               className="mt-1 w-full rounded-xl border border-sand-300 bg-cream-50 px-4 py-3 text-sm text-espresso-800 placeholder:text-espresso-700/60 focus:border-cocoa-400 focus:outline-none focus:ring-2 focus:ring-cocoa-200"
             />
           </div>
-          <a
+          <motion.a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-cocoa-600 px-6 text-sm font-bold uppercase tracking-wider text-cream-50 transition-colors hover:bg-cocoa-700 active:scale-[0.98]"
+            whileHover={reduce ? undefined : { scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-cocoa-600 px-6 text-sm font-bold uppercase tracking-wider text-cream-50 transition-colors hover:bg-cocoa-700"
           >
             <WhatsappLogo size={18} weight="fill" aria-hidden /> Kirim ke WhatsApp
-          </a>
+          </motion.a>
           <p className="text-center text-xs text-espresso-700">Data tidak disimpan — hanya membuat link WhatsApp.</p>
         </form>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+
 const faqs = [
   {
     q: "Apa saja produk AIS Frozen Food?",
@@ -30,6 +35,8 @@ const faqs = [
 ];
 
 export function Faq() {
+  const [open, setOpen] = useState<number | null>(null);
+  const reduce = useReducedMotion();
   const schema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -53,27 +60,41 @@ export function Faq() {
         </div>
 
         <dl className="flex flex-col gap-4">
-          {faqs.map((item) => (
-            <div
-              key={item.q}
-              className="overflow-hidden rounded-2xl border border-sand-300 bg-white"
-            >
-              <details className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display text-lg font-bold text-espresso-800 transition-colors group-hover:text-cocoa-600">
+          {faqs.map((item, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={item.q} className="overflow-hidden rounded-2xl border border-sand-300 bg-white">
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left font-display text-lg font-bold text-espresso-800 transition-colors hover:text-cocoa-600"
+                >
                   {item.q}
-                  <span
+                  <motion.span
                     aria-hidden
-                    className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-cocoa-100 text-cocoa-600 transition-transform duration-300 group-open:rotate-45"
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+                    className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-cocoa-100 text-cocoa-600"
                   >
                     +
-                  </span>
-                </summary>
-                <p className="px-5 pb-5 text-sm leading-relaxed text-espresso-700">
-                  {item.a}
-                </p>
-              </details>
-            </div>
-          ))}
+                  </motion.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={reduce ? false : { height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-5 pb-5 text-sm leading-relaxed text-espresso-700">{item.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </dl>
       </div>
 

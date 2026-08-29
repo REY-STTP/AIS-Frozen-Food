@@ -83,6 +83,7 @@ export function FeaturedProducts() {
               </a>
 
               <Script
+                id={`featured-jsonld-${p.id}`}
                 type="application/ld+json"
               >
                 {JSON.stringify({

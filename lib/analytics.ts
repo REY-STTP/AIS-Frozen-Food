@@ -3,9 +3,7 @@
 type EventName = "whatsapp_click" | "tel_click" | "inquiry_submit" | "ab_view" | "page_view";
 
 export function track(event: EventName, props?: Record<string, string | number>) {
-  // Console untuk dev
   if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line no-console
     console.debug(`[analytics] ${event}`, props);
   }
 

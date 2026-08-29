@@ -12,10 +12,10 @@ export function ResellerCTA() {
   return (
     <section className="bg-cream-100 px-4 py-12 md:px-12 md:py-16">
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={reduce ? false : { opacity: 0, y: 20, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.7, ease }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
         className="relative mx-auto max-w-6xl overflow-hidden rounded-4xl bg-espresso-800 px-6 py-14 text-center md:px-12"
       >
         {/* Decorative snowflakes */}
@@ -41,7 +41,11 @@ export function ResellerCTA() {
             Hubungi kami untuk informasi produk dan pembelian dalam jumlah
             banyak dengan harga grosir.
           </p>
-          <div className="mt-8">
+          <motion.div
+            className="mt-8"
+            animate={reduce ? undefined : { scale: [1, 1.02, 1] }}
+            transition={reduce ? undefined : { duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
+          >
             <WhatsAppButton
               href={waLink(WA_MESSAGES.reseller)}
               size="lg"
@@ -49,7 +53,7 @@ export function ResellerCTA() {
             >
               Tanya Harga Grosir
             </WhatsAppButton>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </section>

@@ -28,19 +28,20 @@ export function useAB<E extends ExperimentId>(experimentId: E, defaultVariant: V
   const [variant, setVariant] = useState<VariantMap[E]>(defaultVariant);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_PREFIX + experimentId) as VariantMap[E] | null;
-      if (stored) {
-        setVariant(stored);
-        return;
+    queueMicrotask(() => {
+      try {
+        const stored = localStorage.getItem(STORAGE_PREFIX + experimentId) as VariantMap[E] | null;
+        if (stored) {
+          setVariant(stored);
+          return;
+        }
+        const picked = pickVariant(experimentId);
+        localStorage.setItem(STORAGE_PREFIX + experimentId, picked);
+        setVariant(picked);
+      } catch {
+        setVariant(pickVariant(experimentId));
       }
-      const picked = pickVariant(experimentId);
-      localStorage.setItem(STORAGE_PREFIX + experimentId, picked);
-      setVariant(picked);
-    } catch {
-      // fallback to random without persistence
-      setVariant(pickVariant(experimentId));
-    }
+    });
   }, [experimentId]);
 
   return variant;
@@ -49,7 +50,6 @@ export function useAB<E extends ExperimentId>(experimentId: E, defaultVariant: V
 // helper untuk tracking (console + future analytics)
 export function trackABView(experimentId: ExperimentId, variant: string) {
   if (typeof window !== "undefined") {
-    // eslint-disable-next-line no-console
     console.debug(`[AB] view ${experimentId}=${variant}`);
   }
 }

@@ -123,6 +123,7 @@ export default function RootLayout({
         <CookieConsent />
         <PwaRegister />
         <Script
+          id="breadcrumb-jsonld"
           type="application/ld+json"
         >
           {JSON.stringify({

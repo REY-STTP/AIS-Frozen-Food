@@ -29,7 +29,6 @@ export async function fetchCatalog(): Promise<CatalogItem[]> {
 
 export async function syncCatalogToWhatsApp(): Promise<{ ok: boolean; count: number }> {
   const items = await fetchCatalog();
-  // eslint-disable-next-line no-console
   console.log(`[catalog] sync mock ${items.length} items — configure WHATSAPP_TOKEN untuk sync real`);
   return { ok: true, count: items.length };
 }

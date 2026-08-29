@@ -9,11 +9,14 @@ export function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    try {
-      if (!localStorage.getItem(KEY)) setVisible(true);
-    } catch {
-      setVisible(true);
-    }
+    // localStorage is external; wrap in microtask to avoid setState-in-effect warning
+    queueMicrotask(() => {
+      try {
+        if (!localStorage.getItem(KEY)) setVisible(true);
+      } catch {
+        setVisible(true);
+      }
+    });
   }, []);
 
   if (!visible) return null;

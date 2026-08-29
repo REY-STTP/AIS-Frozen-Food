@@ -178,6 +178,7 @@ export function ProductShowcase() {
                   </p>
 
                   <Script
+                    id={`product-jsonld-${g.imageNo}`}
                     type="application/ld+json"
                   >
                     {JSON.stringify({

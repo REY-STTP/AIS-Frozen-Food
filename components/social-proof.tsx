@@ -1,7 +1,42 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { Star } from "@phosphor-icons/react/dist/ssr";
+import { useRef } from "react";
+
+function CountUp({ value, suffix = "", decimals = 0 }: { value: number; suffix?: string; decimals?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const reduce = useReducedMotion();
+  const [display, setDisplay] = useState(reduce ? value : 0);
+
+  useEffect(() => {
+    if (!inView || reduce) {
+      if (reduce) queueMicrotask(() => setDisplay(value));
+      return;
+    }
+    let raf = 0;
+    const start = performance.now();
+    const duration = 1100;
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplay(eased * value);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, value, reduce]);
+
+  const formatted = decimals ? display.toFixed(decimals) : Math.round(display).toString();
+  return (
+    <span ref={ref}>
+      {formatted}
+      {suffix}
+    </span>
+  );
+}
 
 const testimonials = [
   {
@@ -68,22 +103,34 @@ export function SocialProof() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-6 text-center">
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+          className="mt-8 flex flex-wrap justify-center gap-6 text-center"
+        >
           <div>
-            <div className="font-display text-2xl font-bold text-espresso-800">4.9/5</div>
+            <div className="font-display text-2xl font-bold text-espresso-800">
+              <CountUp value={4.9} decimals={1} suffix="/5" />
+            </div>
             <div className="text-xs uppercase tracking-wider text-cocoa-600">Rating pelanggan</div>
           </div>
           <div className="h-10 w-px bg-sand-300" aria-hidden />
           <div>
-            <div className="font-display text-2xl font-bold text-espresso-800">500+</div>
+            <div className="font-display text-2xl font-bold text-espresso-800">
+              <CountUp value={500} suffix="+" />
+            </div>
             <div className="text-xs uppercase tracking-wider text-cocoa-600">Transaksi / bulan</div>
           </div>
           <div className="h-10 w-px bg-sand-300" aria-hidden />
           <div>
-            <div className="font-display text-2xl font-bold text-espresso-800">50+</div>
+            <div className="font-display text-2xl font-bold text-espresso-800">
+              <CountUp value={50} suffix="+" />
+            </div>
             <div className="text-xs uppercase tracking-wider text-cocoa-600">Reseller aktif</div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

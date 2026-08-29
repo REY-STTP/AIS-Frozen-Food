@@ -74,7 +74,7 @@ export function ExitIntentPopup() {
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseleave", onMouseLeave);
     };
-  }, [ready, open]);
+  }, [ready, open, isDismissed]);
 
   useEffect(() => {
     if (!open) return;

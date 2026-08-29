@@ -17,13 +17,13 @@ export function DeliveryLocation() {
     const el = mapRef.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setMapVisible(true);
+      queueMicrotask(() => setMapVisible(true));
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
-          setMapVisible(true);
+          queueMicrotask(() => setMapVisible(true));
           io.disconnect();
         }
       },

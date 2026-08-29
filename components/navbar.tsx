@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { List, X } from "@phosphor-icons/react/dist/ssr";
 import logoImg from "@/public/logo.png";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
@@ -19,9 +19,29 @@ const navItems = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-sand-300 bg-cream-100/95 shadow-sm backdrop-blur-md">
+    <motion.header
+      animate={
+        reduce
+          ? undefined
+          : scrolled
+            ? { y: 0, boxShadow: "0 4px 20px rgba(42,23,17,0.08)" }
+            : { y: 0, boxShadow: "0 1px 4px rgba(42,23,17,0.06)" }
+      }
+      initial={false}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
+      className="sticky top-0 z-50 w-full border-b border-sand-300 bg-cream-100/95 shadow-sm backdrop-blur-md"
+    >
       <nav className="flex h-20 items-center justify-between px-4 md:h-24 md:px-12">
         {/* Brand block */}
         <Link
@@ -118,6 +138,6 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
