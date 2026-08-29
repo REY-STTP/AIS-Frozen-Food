@@ -25,7 +25,7 @@ export function ContactCTA() {
         <h2 className="font-display text-3xl font-bold italic leading-tight text-espresso-800 sm:text-4xl md:text-5xl">
           Siap pesan frozen food?
         </h2>
-        <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-ink-muted md:text-base">
+        <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-espresso-700 md:text-base">
           Hubungi AIS Frozen Food untuk cek produk, harga, dan ketersediaan.
           Kami balas secepatnya setiap hari.
         </p>
@@ -33,7 +33,7 @@ export function ContactCTA() {
           <WhatsAppButton href={waLink(WA_MESSAGES.contact)} size="lg">
             Chat WhatsApp
           </WhatsAppButton>
-          <p className="text-sm tracking-wide text-ink-muted">
+          <p className="text-sm tracking-wide text-espresso-700">
             {WHATSAPP_DISPLAY}
           </p>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { MapPin, Storefront, Truck, Clock, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
@@ -9,6 +10,28 @@ import { WA_MESSAGES, waLink } from "@/lib/whatsapp";
 export function DeliveryLocation() {
   const reduce = useReducedMotion();
   const ease = [0.16, 1, 0.3, 1] as const;
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [mapVisible, setMapVisible] = useState(false);
+
+  useEffect(() => {
+    const el = mapRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setMapVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setMapVisible(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section
@@ -30,7 +53,7 @@ export function DeliveryLocation() {
           <h2 className="mt-3 font-display text-3xl font-bold italic text-espresso-800 sm:text-4xl">
             Kunjungi Toko Kami
           </h2>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted">
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-espresso-700">
             Datang langsung ke toko kami di Margorejo, Pati — atau pesan lewat
             WhatsApp dan pesanan diantar sampai depan rumah.
           </p>
@@ -44,7 +67,7 @@ export function DeliveryLocation() {
                 <h3 className="font-display text-lg font-bold text-espresso-800">
                   Ambil di Toko
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+                <p className="mt-1 text-sm leading-relaxed text-espresso-700">
                   {business.addressFull}
                 </p>
               </div>
@@ -57,7 +80,7 @@ export function DeliveryLocation() {
                 <h3 className="font-display text-lg font-bold text-espresso-800">
                   Pesan Antar
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+                <p className="mt-1 text-sm leading-relaxed text-espresso-700">
                   Melayani area {business.serviceArea}.
                 </p>
               </div>
@@ -70,7 +93,7 @@ export function DeliveryLocation() {
                 <h3 className="font-display text-lg font-bold text-espresso-800">
                   Jam Buka
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+                <p className="mt-1 text-sm leading-relaxed text-espresso-700">
                   {business.hours}
                 </p>
               </div>
@@ -95,19 +118,29 @@ export function DeliveryLocation() {
 
         {/* Map column */}
         <motion.div
+          ref={mapRef as unknown as React.RefObject<HTMLDivElement>}
           initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, delay: 0.1, ease }}
           className="relative min-h-90 flex-1 overflow-hidden rounded-4xl border border-sand-300 bg-cream-50 shadow-md lg:min-h-140"
         >
-          <iframe
-            title="Peta lokasi AIS Frozen Food"
-            src={business.mapsEmbed}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="absolute inset-0 h-full w-full"
-          />
+          {mapVisible ? (
+            <iframe
+              title="Peta lokasi toko AIS Frozen Food di Margorejo, Pati, Jawa Tengah"
+              src={business.mapsEmbed}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full"
+              style={{ border: 0 }}
+            />
+          ) : (
+            <div className="absolute inset-0 grid place-items-center bg-sand-200">
+              <span className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-espresso-700 shadow">Memuat peta…</span>
+            </div>
+          )}
           <span className="pointer-events-none absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-cream-50/95 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-espresso-800 shadow-sm">
             <MapPin size={14} className="text-cocoa-600" aria-hidden />
             {business.addressShort}

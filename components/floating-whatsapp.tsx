@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
-import { WA_MESSAGES, waLink } from "@/lib/whatsapp";
+import { WA_MESSAGES, waLink, WHATSAPP_NUMBER } from "@/lib/whatsapp";
+import { trackTelClick } from "@/lib/analytics";
 
 export function FloatingWhatsApp() {
   const [show, setShow] = useState(false);
@@ -27,15 +28,29 @@ export function FloatingWhatsApp() {
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="fixed bottom-5 right-5 z-40 md:bottom-7 md:right-7"
         >
-          <Link
-            href={waLink(WA_MESSAGES.general)}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat WhatsApp"
-            className="group flex h-14 w-14 items-center justify-center rounded-full bg-cocoa-600 text-cream-50 shadow-lg transition-all duration-300 hover:bg-cocoa-700 active:scale-95 md:h-16 md:w-16"
-          >
-            <WhatsappLogo size={28} weight="fill" aria-hidden />
-          </Link>
+          <div className="flex flex-col items-center gap-2">
+            <Link
+              href={waLink(WA_MESSAGES.general)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Chat WhatsApp AIS Frozen Food"
+              className="group flex h-14 w-14 items-center justify-center rounded-full bg-cocoa-600 text-cream-50 shadow-lg transition-all duration-300 hover:bg-cocoa-700 active:scale-95 md:h-16 md:w-16"
+            >
+              <WhatsappLogo size={28} weight="fill" aria-hidden />
+            </Link>
+            <Link
+              href={`tel:+${WHATSAPP_NUMBER}`}
+              aria-label="Telepon AIS Frozen Food 0852-2612-2121"
+              onClick={() => {
+                try {
+                  trackTelClick("floating");
+                } catch {}
+              }}
+              className="hidden items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-espresso-800 shadow md:inline-flex"
+            >
+              Tel: 0852-2612-2121
+            </Link>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -25,5 +25,11 @@ Setiap hari, 08.00–20.00 WIB.
 - TikTok: @ais.frozen.food (https://www.tiktok.com/@ais.frozen.food)
 - Google Maps: https://www.google.com/maps/search/?api=1&query=Lumpur+Bumirejo+Margorejo+Pati
 
+## Fitur Situs (Phase 3)
+- Katalog dengan tab kategori + skeleton loading + urgency badge Fresh/Stok terbatas
+- Produk unggulan 8 item + social proof (3 testimoni, rating 4.9/5, 50+ reseller)
+- Form tanya stok (nama/WA/catatan → auto link WhatsApp)
+- Exit-intent popup & sticky bottom bar mobile (Chat + Tel)
+
 ## Situs Web
 https://www.ais-frozen-food.web.id

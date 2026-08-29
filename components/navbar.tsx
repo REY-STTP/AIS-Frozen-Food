@@ -90,6 +90,8 @@ export function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden border-t border-sand-300 bg-cream-100 lg:hidden"
+          role="dialog"
+          aria-modal="true"
           >
             <ul className="flex flex-col px-6 py-4">
               {navItems.map((item) => (

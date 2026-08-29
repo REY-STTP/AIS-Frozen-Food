@@ -8,16 +8,17 @@
 </p>
 
 <p align="center">
-  <strong>Website profil &amp; katalog digital interaktif modern untuk AIS Frozen Food — UMKM penyedia aneka makanan beku berkualitas untuk kebutuhan rumah, toko, dan reseller di area Pati &amp; Kudus.</strong>
+  <strong>Website profil & katalog digital modern untuk AIS Frozen Food — UMKM makanan beku berkualitas untuk rumah, toko, dan reseller di Pati & Kudus.</strong>
 </p>
 
 <p align="center">
   <a href="#-fitur-utama">Fitur Utama</a> •
   <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-struktur-proyek">Struktur Proyek</a> •
+  <a href="#-struktur-proyek">Struktur</a> •
   <a href="#-panduan-instalasi">Instalasi</a> •
-  <a href="#-panduan-kustomisasi">Kustomisasi</a> •
-  <a href="#-seo--geo">SEO &amp; GEO</a> •
+  <a href="#-kustomisasi">Kustomisasi</a> •
+  <a href="#-seo--geo">SEO & GEO</a> •
+  <a href="#-keamanan--performa">Keamanan</a> •
   <a href="#-deploy">Deploy</a>
 </p>
 
@@ -25,14 +26,7 @@
 
 ## 🌟 Tentang Proyek
 
-**AIS Frozen Food** adalah landing page modern berperforma tinggi yang dirancang untuk meningkatkan konversi pemesanan dan mempermudah pelanggan menelusuri katalog. Mengusung desain *artisanal warm* premium (krem hangat, cocok espresso, aksen cokelat — tipografi Playfair Display + Poppins), website ini memberikan kesan brand makanan elegan sekaligus ringan dan responsif di berbagai perangkat.
-
-### 💡 Keunggulan Utama:
-- **Order via WhatsApp Otomatis**: Integrasi chat WhatsApp dengan template pesan cerdas yang terisi otomatis sesuai produk/kategori yang dipilih.
-- **Katalog Produk per Poster**: Produk dikelompokkan per poster katalog (`posterGroups`) lengkap dengan chip varian rasa — menghindari poster sama tampil berulang.
-- **Desain Artisanal**: Kartu produk dengan bentuk *arch* (`rounded-t-full`), top bar, header sticky, hero full-width, dan footer espresso gelap.
-- **Aksesibilitas & Performa**: Dukungan penuh `prefers-reduced-motion`, optimasi gambar Next.js Image, dan struktur HTML semantik.
-- **SEO & GEO Siap**: JSON-LD (`LocalBusiness` + `FAQPage`), `robots.txt`, `sitemap.xml`, `llms.txt`, meta geo, dan OpenGraph/Twitter Cards.
+**AIS Frozen Food** — landing page artisanal warm (cream `#F5F1E8`, espresso `#2A1711`, cocoa `#5D4037`) dengan tipografi Playfair Display + Poppins. Dibangun Next.js 16 App Router, fokus konversi WhatsApp, SEO/GEO, dan performa (LCP <2.5s, CLS <0.1).
 
 ---
 
@@ -40,33 +34,29 @@
 
 | Fitur | Deskripsi |
 | :--- | :--- |
-| 🔝 **Top Bar & Sticky Header** | Bar alamat/jam/sosmed di atas; header dengan logo, navigasi, dan CTA "Pesan Sekarang". |
-| 🖼️ **Hero Full-width** | Background foto toko (`/gallery/toko.jpg`), badge jam buka, judul serif, CTA, dan statistik. |
-| 🏷️ **Kenapa Memilih Kami** | Tiga kartu *arch* (Dimsum, Cilok & Cireng, Aneka Lumer) dengan hover lift. |
-| 🍱 **Katalog Produk** | Filter kategori (tab) menampilkan kartu per poster lengkap dengan chip varian rasa. |
-| ⭐ **Produk Unggulan** | Grid 4 kolom berisi 8 produk unggulan (satu poster unik per kartu). |
-| 🤝 **Reseller & Grosir CTA** | Banner espresso khusus program reseller & pembelian grosir. |
-| 📍 **Lokasi & Google Maps** | Layout info kiri, peta Maps kanan; kartu Ambil di Toko, Pesan Antar, & Jam Buka. |
-| 💬 **Smart WhatsApp** | Tombol di header, tiap kartu produk, footer, dan tombol mengambang (*Floating Button*). |
-| ❓ **FAQ** | Accordion 7 pertanyaan (native `<details>`) + skema `FAQPage` untuk mesin AI. |
-| 📱 **Responsif & Mobile Friendly** | Optimal dari smartphone (menu drawer) hingga desktop. |
-| 🔍 **SEO & GEO Lengkap** | JSON-LD, `robots.txt`, `sitemap.xml`, `llms.txt`, meta geo, OpenGraph & Twitter Cards. |
+| 🔝 **Top Bar & Sticky Header** | Alamat/jam/sosmed + header sticky, drawer mobile `role=dialog` `aria-modal`, keyboard nav arrow/Home/End di tab produk |
+| 🖼️ **Hero** | Foto toko `priority` + `fetchPriority high`, urgency badge `Fresh hari ini / Stok terbatas`, A/B CTA copy & warna (`lib/ab.ts`), stats `dl` |
+| 🏷️ **Kenapa Memilih Kami** | 3 kartu arch + hover lift, `prefers-reduced-motion` |
+| 🍱 **Katalog Produk** | Tab kategori + kartu per poster + chip varian, `Product` JSON-LD per item, skeleton `animate-pulse` saat ganti tab, badge Fresh/Stok, `aria-label` deskriptif |
+| ⭐ **Produk Unggulan** | Grid 4 kolom 8 item, `Product` JSON-LD, Fresh badge, link WA `aria-label` |
+| 💬 **Social Proof** | 3 testimoni rating 5 (layout `flex-col flex-1` agar nama tidak geser karena panjang kalimat) + reseller logos + stats 4.9/5 |
+| 📝 **Inquiry Form Mini** | `components/inquiry-form.tsx` — nama/WA/catatan → auto `wa.me` link |
+| 🎯 **Exit-Intent + Sticky Bar** | `exit-intent-popup.tsx` (mousemove top ≤8px + scroll-up >60px, sessionStorage) + `sticky-cta-bar.tsx` thumb-friendly `tel:` + WA |
+| 🤝 **Reseller & Grosir CTA** | Banner espresso program reseller |
+| 📍 **Lokasi & Maps** | Info kiri + Maps kanan lazy via `IntersectionObserver` 200px, `allow="autoplay"` + `referrerPolicy`, placeholder `Memuat peta…` |
+| 💬 **Smart WhatsApp** | `WhatsAppButton` reusable + `floating-whatsapp.tsx` (WA + `tel:+6285226122121` fallback) + tracking `lib/analytics.ts` (Plausible/gtag/dataLayer) |
+| ❓ **FAQ** | Accordion `<details>` + `FAQPage` JSON-LD |
+| 🛡️ **Error Handling** | `app/error.tsx` + `app/global-error.tsx` (`html/body` wrapper) + `app/not-found.tsx` 404 custom (kategori + WA) |
+| 📱 **PWA** | `public/manifest.json` + `public/sw.js` cache-first + `pwa-register.tsx`, `themeColor #f5f1e8` |
+| 🍪 **Cookie Consent** | `cookie-consent.tsx` localStorage `ais-cookie-consent` |
 
 ---
 
-## 🛠️ Tech Stack & Dependensi
+## 🛠️ Tech Stack
 
-### Dependensi Utama (`dependencies`)
-- **Framework**: [Next.js 16 (App Router)](https://nextjs.org/) — SSR, routing modern, optimasi gambar.
-- **UI Library**: [React 19](https://react.dev/) & [React DOM 19](https://react.dev/).
-- **Animasi**: [Motion](https://motion.dev/) — transisi layout & micro-interaction (respect `prefers-reduced-motion`).
-- **Ikon**: [@phosphor-icons/react](https://phosphoricons.com/) — ikon SVG konsisten, mendukung SSR.
-
-### Dependensi Pengembangan (`devDependencies`)
-- **Bahasa**: [TypeScript 5](https://www.typescriptlang.org/).
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) + `@tailwindcss/postcss` + `postcss`.
-- **Linting**: [ESLint 9](https://eslint.org/) dengan `eslint-config-next`.
-- **Tipografi**: Google Fonts (*Playfair Display* serif + *Poppins* sans) via `next/font`.
+**Dependencies:** Next.js 16 (App Router, Turbopack), React 19, Motion 11, @phosphor-icons/react 2
+**Dev:** TypeScript 5, Tailwind CSS v4 + @tailwindcss/postcss, ESLint 9 + eslint-config-next, Storybook (`.storybook/`, `whatsapp-button.stories.tsx`)
+**Lain:** Plausible analytics, Sentry stub (`instrumentation.ts`), next/og OG image, next/web-vitals CWV budgets
 
 ---
 
@@ -75,189 +65,119 @@
 ```text
 AIS-Frozen-Food/
 ├── app/
-│   ├── globals.css           # Tema Tailwind v4, token warna cream/cocoa/espresso, font
-│   ├── icon.png              # Favicon resolusi tinggi
-│   ├── layout.tsx            # Root layout, metadata SEO, font, JSON-LD, Floating WhatsApp
-│   ├── page.tsx              # Halaman utama (komposisi section)
-│   ├── robots.ts             # Route /robots.txt
-│   └── sitemap.ts            # Route /sitemap.xml
+│   ├── layout.tsx            # font swap + preconnect wa.me/google/fonts.gstatic + Plausible + WebVitals + CookieConsent + PwaRegister + BreadcrumbList ld+json
+│   ├── page.tsx              # Hero → WhyAIS → ProductShowcase → Featured → SocialProof → InquiryForm → Reseller → Delivery → Faq → Contact
+│   ├── globals.css           # Tailwind v4 tokens cream/cocoa/espresso
+│   ├── icon.png / opengraph-image.tsx  # OG 1200×630 next/og
+│   ├── error.tsx / global-error.tsx / not-found.tsx
+│   ├── robots.ts             # allow:/ disallow /api /login /admin /draft
+│   └── sitemap.ts            # hanya / (hash #produk tidak di-sitemap, siap /produk/[slug])
+├── proxy.ts                  # 308 redirect ke NEXT_PUBLIC_SITE_URL host kanonik (www)
 ├── components/
-│   ├── ui/
-│   │   ├── container.tsx             # Wrapper layout (max-w konsisten)
-│   │   └── whatsapp-button.tsx       # Tombol WhatsApp reusable (varian primary/outline/cream)
-│   ├── site-topbar.tsx       # Bar alamat, jam, & ikon sosmed
-│   ├── navbar.tsx            # Header sticky + drawer mobile
-│   ├── hero.tsx              # Hero full-width background foto toko
-│   ├── why-ais.tsx           # 3 kartu arch "Kenapa Memilih Kami"
-│   ├── product-showcase.tsx  # Tab kategori + kartu poster + chip varian
-│   ├── featured-products.tsx # Grid 4 kolom produk unggulan
-│   ├── reseller-cta.tsx      # Banner CTA reseller/grosir
-│   ├── delivery-location.tsx # Info kiri + Google Maps kanan
-│   ├── contact-cta.tsx       # Ajakan pemesanan cepat
-│   ├── footer.tsx            # Footer espresso gelap
-│   ├── floating-whatsapp.tsx # Tombol WA melayang kanan bawah
-│   ├── seo.tsx               # JSON-LD LocalBusiness
-│   └── faq.tsx               # Section FAQ + JSON-LD FAQPage
+│   ├── ui/whatsapp-button.tsx + .stories.tsx
+│   ├── hero.tsx (A/B), product-showcase.tsx (skeleton+urgency), featured-products.tsx
+│   ├── social-proof.tsx (flex-1 layout fix), inquiry-form.tsx
+│   ├── exit-intent-popup.tsx, sticky-cta-bar.tsx, cookie-consent.tsx, pwa-register.tsx, web-vitals.tsx
+│   ├── delivery-location.tsx (IntersectionObserver), floating-whatsapp.tsx (tel fallback)
+│   ├── seo.tsx, faq.tsx, navbar.tsx, footer.tsx ...
 ├── lib/
-│   ├── business.ts           # Profil usaha (alamat, jam, maps, sosmed)
-│   ├── images.ts             # Metadata rasio aspek & helper URL produk
-│   ├── products.ts           # Kategori, daftar produk, & posterGroups
-│   ├── site.ts               # Resolusi SITE_URL dari env (dengan fallback)
-│   ├── utils.ts              # Utility (cn / classnames helper)
-│   └── whatsapp.ts           # Nomor WA & generator link pesan
+│   ├── business.ts, products.ts, site.ts (SITE_URL), whatsapp.ts
+│   ├── design-tokens.ts, utils.ts (validateEnv), analytics.ts (track), ab.ts (useAB), catalog.ts (Meta API stub), sentry.ts
 ├── public/
-│   ├── logo.png              # Logo AIS Frozen Food
-│   ├── gallery/toko.jpg      # Foto toko (background hero)
-│   ├── products/             # Poster katalog: produk-1.jpg … produk-8.jpg
-│   └── llms.txt              # Ringkasan untuk mesin AI (GEO)
-├── .env.example              # Template variabel lingkungan (NEXT_PUBLIC_SITE_URL)
-├── eslint.config.mjs         # Konfigurasi ESLint
-├── next.config.ts            # Konfigurasi Next.js
-├── package.json              # Dependensi & script
-├── postcss.config.mjs        # PostCSS untuk Tailwind v4
-└── tsconfig.json             # Konfigurasi TypeScript
+│   ├── logo.png, icon.png, manifest.json, sw.js, llms.txt
+│   ├── products/produk-1…8.jpg, gallery/toko.jpg
+├── docs/
+│   ├── API.md (rencana /api/products, /inquiry, /catalog/sync) 
+│   └── social-assets.md (banner sizes)
+├── .storybook/ (main.ts, preview.ts)
+├── .github/workflows/ci.yml (lint→typecheck→build)
+├── next.config.ts (images avif/webp, CSP, security headers, cache-control)
+├── instrumentation.ts (Sentry stub)
+└── .env.example / .env.local
 ```
 
 ---
 
-## 💻 Panduan Instalasi & Menjalankan Proyek
+## 💻 Panduan Instalasi
 
-### Prasyarat:
-- **Node.js** (versi 18.18.0+; direkomendasikan LTS 20+)
-- Manajer paket: **npm**, **pnpm**, atau **yarn**
+**Prasyarat:** Node 18.18+ (20 LTS rekomen), npm/pnpm/yarn
 
-### Langkah-langkah:
+```bash
+git clone <repo-url>
+cd AIS-Frozen-Food
+npm install
+cp .env.example .env.local   # isi NEXT_PUBLIC_SITE_URL https://www.domain-anda.com (www, https, tanpa slash)
+npm run dev                  # http://localhost:3000
+npm run typecheck
+npm run lint
+npm run build && npm start
+```
 
-1. **Clone repositori**
-   ```bash
-   git clone <repo-url>
-   cd AIS-Frozen-Food
-   ```
-
-2. **Install dependensi**
-   ```bash
-   npm install
-   ```
-
-3. **(Opsional) Siapkan environment**
-   ```bash
-   cp .env.example .env.local
-   # Edit .env.local, isi NEXT_PUBLIC_SITE_URL dengan domain www Anda
-   ```
-
-4. **Jalankan development server**
-   ```bash
-   npm run dev
-   ```
-   Buka [http://localhost:3000](http://localhost:3000).
-
-5. **Script Perintah Lainnya**
-   ```bash
-   npm run typecheck   # Type checking TypeScript
-   npm run lint        # Linting dengan ESLint
-   npm run build       # Build mode produksi
-   npm run start       # Jalankan server produksi
-   ```
+**Validasi:** `npm run build` harus `✓ Generating static pages (7/7)` + `ƒ Proxy`.
 
 ---
 
-## ⚙️ Panduan Kustomisasi
+## ⚙️ Kustomisasi
 
-Seluruh data bisnis, produk, dan tautan WhatsApp tersentralisasi di `lib/` sehingga mudah diperbarui tanpa mengubah komponen.
-
-### 1. Data Usaha & Kontak — `lib/business.ts`
-```typescript
-export const business = {
-  name: "AIS Frozen Food",
-  tagline: "Frozen Food Favorit untuk Rumah & Usaha",
-  hours: "Setiap hari · 08.00–20.00 WIB",
-  addressShort: "Lumpur, Bumirejo, Margorejo, Pati",
-  addressFull: "Lumpur, Bumirejo, Kec. Margorejo, Kabupaten Pati, Jawa Tengah",
-  whatsappDisplay: "0852-2612-2121",
-  tiktok: "@ais.frozen.food",
-  tiktokUrl: "https://www.tiktok.com/@ais.frozen.food",
-  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Lumpur+Bumirejo+Margorejo+Pati",
-  mapsEmbed: "https://www.google.com/maps?q=...",
-  serviceArea: "Pati – Kudus",
-} as const;
+**1. Usaha — `lib/business.ts`**
+```ts
+export const business = { name:"AIS Frozen Food", tagline:"...", hours:"08.00–20.00", addressShort:"Lumpur, Bumirejo", ... } as const;
 ```
 
-### 2. Katalog Produk — `lib/products.ts`
-Produk dikelompokkan per **poster** agar satu poster tidak tampil berulang. Setiap grup punya `imageNo` (merujuk `produk-N.jpg`), `title`, `description`, dan daftar `variants` (tampil sebagai chip):
-```typescript
-export const posterGroups: PosterGroup[] = [
-  {
-    imageNo: 1,
-    category: "frozen",
-    title: "Aneka Siap Goreng",
-    description: "Frozen tanpa pengawet, tinggal goreng langsung di rumah.",
-    variants: ["Singkong Keju", "Gemblong Cotot", "Timusku"],
-  },
-  // ...
-];
-```
-> **Pemetaan poster:** `1` = Singkong Keju/Gemblong/Timusku, `2` & `3` = Dimsum, `4` = Aneka Lumer, `5` = Cilok & Cireng, `6` = Sushi Nori, `7` = Rice Paper, `8` = Saus Mentai. Ganti file `public/products/produk-N.jpg` sesuai nomor tersebut.
+**2. Produk — `lib/products.ts`** per `posterGroup` (`imageNo` → `produk-N.jpg`, `variants` chip)
 
-### 3. Nomor WhatsApp & Template Chat — `lib/whatsapp.ts`
-```typescript
-export const WHATSAPP_NUMBER = "6285226122121"; // Tanpa tanda +
-export const WHATSAPP_DISPLAY = "0852-2612-2121";
+**3. WhatsApp — `lib/whatsapp.ts`**
+```ts
+export const WHATSAPP_NUMBER="6285226122121";
 ```
 
-### 4. URL Situs (Canonical, OG, Sitemap, JSON-LD) — `.env`
-Atur di `.env.local` (lihat `.env.example`):
-```
+**4. URL — `.env.local`**
+```ini
 NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
+# WHATSAPP_TOKEN=... (catalog sync)
+# SENTRY_DSN=... (Sentry)
+# NEXT_PUBLIC_PLAUSIBLE_DOMAIN=...
 ```
-Jika kosong, kode fallback ke `https://www.ais-frozen-food.vercel.app` (lihat `lib/site.ts`). Selalu gunakan versi `www.` agar konsisten.
+`lib/site.ts` fallback `https://www.ais-frozen-food.vercel.app`. Selalu `www` agar `proxy.ts` 308 konsisten. Google verification di `app/layout.tsx:77` `verification.google`.
 
-### 5. Logo & Favicon
-- `public/logo.png` — logo (tampil di navbar & footer).
-- `app/icon.png` — ikon tab browser.
+**5. Desain tokens — `lib/design-tokens.ts`** (cream/espresso/cocoa/sand, spacing, typography)
 
 ---
 
 ## 🔍 SEO & GEO
 
-Proyek ini dioptimasi untuk mesin pencari tradisional maupun *Generative Engine* (ChatGPT, Gemini, Perplexity):
-
-- **JSON-LD**: `LocalBusiness` (`components/seo.tsx`, disuntik di `layout.tsx`) dan `FAQPage` (`components/faq.tsx`) — membantu rich result & kutipan AI.
-- **`app/robots.ts`** → `/robots.txt` (mengizinkan crawl + menunjuk sitemap).
-- **`app/sitemap.ts`** → `/sitemap.xml` (URL situs utama).
-- **`public/llms.txt`** → ringkasan bisnis, produk, layanan, & kontak dalam teks polos untuk dibaca LLM.
-- **Meta geo**: `geo.region: ID-JT`, `geo.placename: Pati` (di `layout.tsx`).
-- **OpenGraph & Twitter Cards** dengan gambar poster produk.
-- **Semantik**: heading berjenjang, `alt` pada gambar, `aria-label` pada ikon, `prefers-reduced-motion`.
-
-> Tips: setelah deploy, validasi dengan **Google Rich Results Test**, **Schema Markup Validator**, dan daftarkan di **Google Search Console**.
+- **JSON-LD:** `LocalBusiness` (`seo.tsx`), `FAQPage` (`faq.tsx`), `Product`+`Offer` per kartu, `BreadcrumbList` (`Beranda → #produk`)
+- **Routes:** `robots.ts` + `sitemap.ts` (hanya `/`, hash tidak di-sitemap) + `public/llms.txt` + `manifest.json`
+- **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` + `twitter` + `app/opengraph-image.tsx`, `geo.region ID-JT`, `verification.google`
+- **Aksesibilitas:** `sr-only` → visible `dt`, `aria-modal`/`role=dialog`, `aria-label` deskriptif per produk, `tabIndex` 0/-1, kontras `text-espresso-700` AA
+- **Validasi:** Google Rich Results Test, Schema Validator, Search Console (meta tag `ndkQkr...`)
 
 ---
 
-## 🚢 Panduan Deploy
+## 🔒 Keamanan & Performa
 
-### Opsi 1: Vercel (Sangat Direkomendasikan)
-1. Push kode ke repositori Git.
-2. Impor ke [Vercel](https://vercel.com).
-3. Vercel otomatis mendeteksi Next.js → klik **Deploy**.
-4. Di *Environment Variables*, tambahkan `NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com`.
+- **Headers `next.config.ts:8`:** CSP `default-src 'self'` + `script-src`/`style-src`/`frame-src`/`connect-src`/`img-src`, `X-Frame-Options SAMEORIGIN`, `X-Content-Type-Options nosniff`, `Referrer-Policy strict-origin-when-cross-origin`, `Permissions-Policy`, `Cache-Control` `public, max-age=31536000, immutable` untuk `/products/*` & `/gallery/*`
+- **Images:** `qualities [60,85]` + `formats avif/webp`, hero `priority` + `fetchPriority high`
+- **Fonts:** `next/font` `display:swap` (preload default) + `preconnect` wa.me/google/fonts.gstatic + `static.fonts.githubusercontent.com` + `dns-prefetch plausible.io`
+- **Maps:** `IntersectionObserver` lazy (200px) + `loading=lazy` + `allow="autoplay; clipboard-write; ..."`
+- **Proxy:** 308 ke `NEXT_PUBLIC_SITE_URL` host kanonik, skip localhost, enforce https
+- **Web Vitals:** `components/web-vitals.tsx` `useReportWebVitals` budgets LCP 2.5s CLS 0.1, `track` ke Plausible/gtag
+- **Analytics:** `lib/analytics.ts` `trackWhatsAppClick`/`trackTelClick` di `WhatsAppButton` + `floating-whatsapp`
 
-### Opsi 2: Netlify
-1. Hubungkan repositori ke [Netlify](https://netlify.com).
-2. Build command: `npm run build`, publish directory: `.next`.
-3. Tambahkan env `NEXT_PUBLIC_SITE_URL` di pengaturan situs.
+---
 
-### Opsi 3: VPS / Docker / Self-hosted
-```bash
-npm run build
-npm run start -p 3000
-```
+## 🚢 Deploy
+
+**Vercel (rekomen):** Push → Import → env `NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com` → Deploy. Atur Google Site Verification sudah di `layout.tsx`.
+
+**Netlify:** Build `npm run build`, publish `.next`, env sama.
+
+**VPS/Docker:** `npm run build && npm run start -p 3000`. Pastikan `proxy.ts` 308 aktif & headers CSP ter-apply.
 
 ---
 
 ## 📄 Lisensi
 
-Proyek ini dikembangkan untuk **AIS Frozen Food**. Seluruh hak cipta merek, aset visual produk, dan materi konten adalah milik pemilik usaha.
+Untuk **AIS Frozen Food** — hak merek & aset milik pemilik usaha.
 
-<p align="center">
-  Dibuat dengan ❤️ untuk kemajuan UMKM Indonesia
-</p>
+<p align="center">Dibuat dengan ❤️ untuk UMKM Indonesia</p>

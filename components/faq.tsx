@@ -68,7 +68,7 @@ export function Faq() {
                     +
                   </span>
                 </summary>
-                <p className="px-5 pb-5 text-sm leading-relaxed text-ink-muted">
+                <p className="px-5 pb-5 text-sm leading-relaxed text-espresso-700">
                   {item.a}
                 </p>
               </details>

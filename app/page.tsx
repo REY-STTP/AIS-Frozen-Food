@@ -9,6 +9,10 @@ import { DeliveryLocation } from "@/components/delivery-location";
 import { ContactCTA } from "@/components/contact-cta";
 import { Faq } from "@/components/faq";
 import { Footer } from "@/components/footer";
+import { ExitIntentPopup } from "@/components/exit-intent-popup";
+import { StickyCtaBar } from "@/components/sticky-cta-bar";
+import { SocialProof } from "@/components/social-proof";
+import { InquiryForm } from "@/components/inquiry-form";
 
 export default function HomePage() {
   return (
@@ -20,12 +24,16 @@ export default function HomePage() {
         <WhyAIS />
         <ProductShowcase />
         <FeaturedProducts />
+        <SocialProof />
+        <InquiryForm />
         <ResellerCTA />
         <DeliveryLocation />
         <Faq />
         <ContactCTA />
       </main>
       <Footer />
+      <ExitIntentPopup />
+      <StickyCtaBar />
     </>
   );
 }

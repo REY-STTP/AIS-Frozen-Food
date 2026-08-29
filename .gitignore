@@ -11,8 +11,8 @@
 /build
 
 # TypeScript Build Info
+next-env.d.ts
 *.tsbuildinfo
-next-env.d.ts.bak
 
 # Environment Variables & Secrets
 .env
@@ -35,7 +35,6 @@ pnpm-debug.log*
 
 # OS Generated Files
 .DS_Store
-.DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
@@ -57,4 +56,33 @@ Desktop.ini
 # Agents & AI Skills
 .agents/
 skills-lock.json
+
+# Storybook (non-production — config .storybook/ tetap di-commit, output ignore)
+storybook-static/
+storybook.log
+
+# Testing & Coverage (non-production)
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+junit.xml
+
+# PWA & Build Artifacts (generated)
+.next/cache/
+*.map
+
+# Misc local & temp (non-production)
+.tmp/
+tmp/
+.cache/
+.parcel-cache/
+.opencode/
+.cursor/
+
+# Docs generated previews (keep docs/*.md, ignore generated)
+docs/_generated/
+
+# Env example keep, but ignore any local overrides already covered above
+!.env.example
 

@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import { business } from "@/lib/business";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { LocalBusinessJsonLd } from "@/components/seo";
 import { SITE_URL } from "@/lib/site";
+import { WebVitals } from "@/components/web-vitals";
+import { CookieConsent } from "@/components/cookie-consent";
+import { PwaRegister } from "@/components/pwa-register";
 
 const SITE = SITE_URL;
 const OG_IMAGE = `${SITE}/products/produk-1.jpg`;
@@ -24,7 +28,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aisfrozenfood.id"),
+  metadataBase: new URL(SITE),
   title: {
     default: `${business.name} — ${business.tagline}`,
     template: `%s · ${business.name}`,
@@ -67,6 +71,10 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   category: "food",
+  manifest: "/manifest.json",
+  verification: {
+    google: "ndkQkr971m_t4mvZTzgt4EZk4Pzpi0AiTU14zF3ckAw",
+  },
   other: {
     "geo.region": "ID-JT",
     "geo.placename": "Pati",
@@ -87,6 +95,20 @@ export default function RootLayout({
       lang="id"
       className={`${playfair.variable} ${poppins.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://wa.me" />
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://static.fonts.githubusercontent.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://plausible.io" />
+        {/* Plausible analytics — ganti data-domain ke domain produksi */}
+        <Script
+          defer
+          data-domain={new URL(SITE).hostname}
+          src="https://plausible.io/js/script.js"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="antialiased overflow-x-hidden">
         <a
           href="#konten"
@@ -97,6 +119,31 @@ export default function RootLayout({
         {children}
         <FloatingWhatsApp />
         <LocalBusinessJsonLd />
+        <WebVitals />
+        <CookieConsent />
+        <PwaRegister />
+        <Script
+          type="application/ld+json"
+        >
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": `${SITE}`
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Produk",
+                "item": `${SITE}/#produk`
+              }
+            ]
+          })}
+        </Script>
       </body>
     </html>
   );

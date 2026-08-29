@@ -1,0 +1,13 @@
+{
+  "name": "AIS Frozen Food",
+  "short_name": "AIS Frozen",
+  "description": "Frozen food favorit untuk rumah & usaha — Pati, Jawa Tengah. Pesan via WhatsApp.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f1e8",
+  "theme_color": "#5D4037",
+  "icons": [
+    { "src": "/icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

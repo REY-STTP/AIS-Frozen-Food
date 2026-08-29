@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/utils";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 type Variant = "primary" | "outline" | "cream";
 
@@ -29,13 +32,23 @@ export function WhatsAppButton({
   variant = "primary",
   size = "md",
   className,
+  onClick,
+  trackSource,
 }: {
   href: string;
   children: React.ReactNode;
   variant?: Variant;
   size?: Size;
   className?: string;
+  onClick?: () => void;
+  trackSource?: string;
 }) {
+  const handleClick = () => {
+    try {
+      trackWhatsAppClick(trackSource ?? href.slice(0, 48));
+    } catch {}
+    onClick?.();
+  };
   return (
     <Link
       href={href}
@@ -47,6 +60,7 @@ export function WhatsAppButton({
         sizes[size],
         className,
       )}
+      onClick={handleClick}
     >
       <WhatsappLogo size={20} weight="fill" aria-hidden />
       <span className="whitespace-nowrap">{children}</span>

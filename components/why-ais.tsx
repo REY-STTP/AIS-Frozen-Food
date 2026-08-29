@@ -40,7 +40,7 @@ export function WhyAIS() {
         <h2 className="font-display text-3xl font-bold text-espresso-800 sm:text-4xl">
           Kenapa Memilih Kami?
         </h2>
-        <p className="mt-5 text-sm leading-relaxed text-ink-muted">
+        <p className="mt-5 text-sm leading-relaxed text-espresso-700">
           Kami menyediakan frozen food pilihan dengan kualitas terjaga — tetap
           beku dan segar sampai di tangan Anda. Cocok untuk stok rumah maupun
           dagangan reseller.
@@ -67,7 +67,7 @@ export function WhyAIS() {
             <h3 className="mb-3 font-display text-2xl font-bold text-espresso-800">
               {item.title}
             </h3>
-            <p className="mb-6 px-6 text-center text-xs leading-relaxed text-ink-muted">
+            <p className="mb-6 px-6 text-center text-xs leading-relaxed text-espresso-700">
               {item.blurb}
             </p>
             <Link
