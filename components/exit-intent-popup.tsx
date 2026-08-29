@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { X, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
@@ -13,8 +13,18 @@ export function ExitIntentPopup() {
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const reduce = useReducedMotion();
+  const hasFiredRef = useRef(false);
+
+  const isDismissed = useCallback(() => {
+    try {
+      return !!sessionStorage.getItem(STORAGE_KEY);
+    } catch {
+      return hasFiredRef.current;
+    }
+  }, []);
 
   const dismiss = useCallback(() => {
+    hasFiredRef.current = true;
     setOpen(false);
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
@@ -22,22 +32,19 @@ export function ExitIntentPopup() {
   }, []);
 
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem(STORAGE_KEY)) return;
-    } catch {}
+    if (isDismissed()) return;
     const t = window.setTimeout(() => setReady(true), SHOW_DELAY_MS);
     return () => window.clearTimeout(t);
-  }, []);
+  }, [isDismissed]);
 
   useEffect(() => {
-    if (!ready || open) return;
+    if (!ready || open || hasFiredRef.current || isDismissed()) return;
 
     let lastY = window.scrollY;
-    let triggered = false;
 
     const trigger = () => {
-      if (triggered) return;
-      triggered = true;
+      if (hasFiredRef.current || isDismissed()) return;
+      hasFiredRef.current = true;
       setOpen(true);
     };
 

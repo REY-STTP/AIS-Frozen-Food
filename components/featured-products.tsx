@@ -10,7 +10,6 @@ const categoryName = (id: CategoryId) =>
 
 export function FeaturedProducts() {
   const reduce = useReducedMotion();
-  const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
     <section className="bg-cream-100 px-4 py-20 md:px-12 md:py-24">
@@ -27,19 +26,29 @@ export function FeaturedProducts() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredProducts.map((p, i) => (
+        <motion.div
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+          }}
+        >
+          {featuredProducts.map((p) => (
             <motion.article
               key={p.id}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{
-                duration: 0.55,
-                delay: (i % 4) * 0.06,
-                ease,
+              variants={{
+                hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.97 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+                },
               }}
-              className="group rounded-2xl bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md"
+              className="group rounded-2xl bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md will-change-transform"
             >
               <div className="relative mb-4 h-56 overflow-hidden rounded-xl lg:h-64">
                 <Image
@@ -96,7 +105,7 @@ export function FeaturedProducts() {
               </Script>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
