@@ -16,6 +16,7 @@ export function LocalBusinessJsonLd() {
     url: SITE,
     telephone: `+${WHATSAPP_NUMBER}`,
     priceRange: "$$",
+    logo: `${SITE}/logo.png`,
     image: Array.from(new Set(products.map((p) => `${SITE}${p.image}`))),
     address: {
       "@type": "PostalAddress",

@@ -72,6 +72,14 @@ export const metadata: Metadata = {
   },
   category: "food",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
+  },
   verification: {
     google: "ndkQkr971m_t4mvZTzgt4EZk4Pzpi0AiTU14zF3ckAw",
   },
