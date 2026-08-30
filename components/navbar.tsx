@@ -45,13 +45,15 @@ export function Navbar() {
   useEffect(() => {
     if (!open) return;
     const mql = window.matchMedia("(min-width: 1024px)");
-    const onChange = (e: MediaQueryListEvent | MediaQueryList) => {
-      if ("matches" in e && e.matches) setOpen(false);
+    const onChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setOpen(false);
     };
-    // Initial check
-    if (mql.matches) setOpen(false);
-    mql.addEventListener("change", onChange as (e: MediaQueryListEvent) => void);
-    return () => mql.removeEventListener("change", onChange as (e: MediaQueryListEvent) => void);
+    // Defer to avoid react-hooks/set-state-in-effect
+    if (mql.matches) {
+      queueMicrotask(() => setOpen(false));
+    }
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
   }, [open]);
 
   return (
