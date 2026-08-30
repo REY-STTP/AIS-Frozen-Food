@@ -22,7 +22,7 @@ export function Footer() {
             className="h-11 w-11 rounded-full object-cover"
           />
           <span className="font-display text-3xl font-bold tracking-widest text-white">
-            FROZEN FOOD
+            AIS FROZEN FOOD
           </span>
         </Link>
 

@@ -29,6 +29,31 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+
+
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Auto-close when viewport becomes desktop (lg)
+  useEffect(() => {
+    if (!open) return;
+    const mql = window.matchMedia("(min-width: 1024px)");
+    const onChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      if ("matches" in e && e.matches) setOpen(false);
+    };
+    // Initial check
+    if (mql.matches) setOpen(false);
+    mql.addEventListener("change", onChange as (e: MediaQueryListEvent) => void);
+    return () => mql.removeEventListener("change", onChange as (e: MediaQueryListEvent) => void);
+  }, [open]);
+
   return (
     <motion.header
       animate={
@@ -48,6 +73,7 @@ export function Navbar() {
           href="#top"
           className="flex items-center gap-3"
           aria-label={`${business.name} beranda`}
+          onClick={() => setOpen(false)}
         >
           <Image
             src={logoImg}
@@ -61,7 +87,7 @@ export function Navbar() {
               Segar &amp; Siap Saji
             </span>
             <span className="font-display text-xl font-bold tracking-wide text-espresso-800 md:text-2xl">
-              FROZEN FOOD
+              AIS FROZEN FOOD
             </span>
             <span className="text-[9px] uppercase tracking-[0.25em] text-cocoa-500">
               Pati · Jawa Tengah
@@ -101,41 +127,43 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — overlay (does not push page down, background remains scrollable) */}
       <AnimatePresence>
         {open && (
           <motion.div
+            key="menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-sand-300 bg-cream-100 lg:hidden"
-          role="dialog"
-          aria-modal="true"
+            className="absolute left-0 right-0 top-full z-50 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-sand-300 bg-cream-100 shadow-lg md:max-h-[calc(100dvh-6rem)] lg:hidden"
+            role="dialog"
+            aria-modal="true"
           >
-            <ul className="flex flex-col px-6 py-4">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="block border-b border-sand-300/60 py-3.5 text-sm font-semibold uppercase tracking-wider text-espresso-800 transition-colors hover:text-cocoa-600"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="px-6 pb-6">
-              <WhatsAppButton
-                href={waLink(WA_MESSAGES.general)}
-                size="md"
-                className="w-full"
-              >
-                Pesan Sekarang
-              </WhatsAppButton>
-            </div>
-          </motion.div>
+              <ul className="flex flex-col px-6 py-4">
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="block border-b border-sand-300/60 py-3.5 text-sm font-semibold uppercase tracking-wider text-espresso-800 transition-colors hover:text-cocoa-600"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="px-6 pb-6">
+                <WhatsAppButton
+                  href={waLink(WA_MESSAGES.general)}
+                  size="md"
+                  className="w-full"
+                  onClick={() => setOpen(false)}
+                >
+                  Pesan Sekarang
+                </WhatsAppButton>
+              </div>
+            </motion.div>
         )}
       </AnimatePresence>
     </motion.header>

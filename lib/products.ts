@@ -21,6 +21,9 @@ export type Product = {
   imageNo: number;
   category: CategoryId;
   featured?: boolean;
+  /** Price in IDR (e.g. 35000) — used for structured data */
+  price?: number;
+  priceCurrency?: string;
 };
 
 export const categories: Category[] = [
@@ -72,6 +75,8 @@ export const products: Product[] = [
     imageNo: 2,
     category: "dimsum",
     featured: true,
+    price: 35000,
+    priceCurrency: "IDR",
   },
   {
     id: "dimsum-ayam-keju",
@@ -80,6 +85,8 @@ export const products: Product[] = [
     image: productImage(2),
     imageNo: 2,
     category: "dimsum",
+    price: 38000,
+    priceCurrency: "IDR",
   },
   {
     id: "dimsum-udang",
@@ -89,6 +96,8 @@ export const products: Product[] = [
     imageNo: 3,
     category: "dimsum",
     featured: true,
+    price: 40000,
+    priceCurrency: "IDR",
   },
   {
     id: "dimsum-ayam-pedas",
@@ -97,6 +106,8 @@ export const products: Product[] = [
     image: productImage(3),
     imageNo: 3,
     category: "dimsum",
+    price: 38000,
+    priceCurrency: "IDR",
   },
 
   // Frozen Food (poster 1)
@@ -108,6 +119,8 @@ export const products: Product[] = [
     imageNo: 1,
     category: "frozen",
     featured: true,
+    price: 28000,
+    priceCurrency: "IDR",
   },
   {
     id: "gemblong-cotot",
@@ -116,6 +129,8 @@ export const products: Product[] = [
     image: productImage(1),
     imageNo: 1,
     category: "frozen",
+    price: 26000,
+    priceCurrency: "IDR",
   },
   {
     id: "timusku",
@@ -124,6 +139,8 @@ export const products: Product[] = [
     image: productImage(1),
     imageNo: 1,
     category: "frozen",
+    price: 27000,
+    priceCurrency: "IDR",
   },
 
   // Aneka Lumer (poster 4)
@@ -135,6 +152,8 @@ export const products: Product[] = [
     imageNo: 4,
     category: "lumer",
     featured: true,
+    price: 32000,
+    priceCurrency: "IDR",
   },
   {
     id: "nangka-coklat",
@@ -143,6 +162,8 @@ export const products: Product[] = [
     image: productImage(4),
     imageNo: 4,
     category: "lumer",
+    price: 30000,
+    priceCurrency: "IDR",
   },
 
   // Cilok & Cireng (poster 5)
@@ -154,6 +175,8 @@ export const products: Product[] = [
     imageNo: 5,
     category: "cilok-cireng",
     featured: true,
+    price: 25000,
+    priceCurrency: "IDR",
   },
   {
     id: "cireng-kriwil",
@@ -162,6 +185,8 @@ export const products: Product[] = [
     image: productImage(5),
     imageNo: 5,
     category: "cilok-cireng",
+    price: 26000,
+    priceCurrency: "IDR",
   },
 
   // Pelengkap (foto 6, 7, 8)
@@ -173,6 +198,8 @@ export const products: Product[] = [
     imageNo: 6,
     category: "pelengkap",
     featured: true,
+    price: 38000,
+    priceCurrency: "IDR",
   },
   {
     id: "rice-paper",
@@ -182,6 +209,8 @@ export const products: Product[] = [
     imageNo: 7,
     category: "pelengkap",
     featured: true,
+    price: 30000,
+    priceCurrency: "IDR",
   },
   {
     id: "saus-mentai",
@@ -191,6 +220,8 @@ export const products: Product[] = [
     imageNo: 8,
     category: "pelengkap",
     featured: true,
+    price: 55000,
+    priceCurrency: "IDR",
   },
 ];
 
@@ -210,6 +241,11 @@ export type PosterGroup = {
   title: string;
   description: string;
   variants: string[];
+  /** Base price in IDR for structured data */
+  price?: number;
+  lowPrice?: number;
+  highPrice?: number;
+  priceCurrency?: string;
 };
 
 export const posterGroups: PosterGroup[] = [
@@ -224,6 +260,10 @@ export const posterGroups: PosterGroup[] = [
       "Dimsum Ayam Jamur",
       "Dimsum Ayam Kepiting",
     ],
+    price: 35000,
+    lowPrice: 35000,
+    highPrice: 40000,
+    priceCurrency: "IDR",
   },
   {
     imageNo: 3,
@@ -237,6 +277,10 @@ export const posterGroups: PosterGroup[] = [
       "Roll Tuna",
       "Ekado Telur",
     ],
+    price: 38000,
+    lowPrice: 38000,
+    highPrice: 45000,
+    priceCurrency: "IDR",
   },
   {
     imageNo: 1,
@@ -244,6 +288,10 @@ export const posterGroups: PosterGroup[] = [
     title: "Aneka Siap Goreng",
     description: "Frozen tanpa pengawet, tinggal goreng langsung di rumah.",
     variants: ["Singkong Keju", "Gemblong Cotot", "Timusku"],
+    price: 28000,
+    lowPrice: 25000,
+    highPrice: 30000,
+    priceCurrency: "IDR",
   },
   {
     imageNo: 4,
@@ -257,6 +305,10 @@ export const posterGroups: PosterGroup[] = [
       "Pisang Coklat Milo",
       "Nangka Coklat",
     ],
+    price: 32000,
+    lowPrice: 30000,
+    highPrice: 35000,
+    priceCurrency: "IDR",
   },
   {
     imageNo: 5,
@@ -270,6 +322,10 @@ export const posterGroups: PosterGroup[] = [
       "Cireng Kriwil Original",
       "Cireng Sambel Rujak",
     ],
+    price: 25000,
+    lowPrice: 25000,
+    highPrice: 28000,
+    priceCurrency: "IDR",
   },
   {
     imageNo: 6,
@@ -277,6 +333,8 @@ export const posterGroups: PosterGroup[] = [
     title: "Sushi Nori",
     description: "Roasted seaweed halal untuk sushi, onigiri, dan gimbap.",
     variants: [],
+    price: 38000,
+    priceCurrency: "IDR",
   },
   {
     imageNo: 7,
@@ -284,6 +342,8 @@ export const posterGroups: PosterGroup[] = [
     title: "Rice Paper",
     description: "Kulit lumpia segar untuk spring roll — isi 10 lembar.",
     variants: [],
+    price: 30000,
+    priceCurrency: "IDR",
   },
   {
     imageNo: 8,
@@ -291,6 +351,10 @@ export const posterGroups: PosterGroup[] = [
     title: "Saus Mentai",
     description: "Saus mentai pedas gurih, cocok untuk dimsum dan sushi.",
     variants: ["250gr", "500gr", "1Kg"],
+    price: 55000,
+    lowPrice: 35000,
+    highPrice: 95000,
+    priceCurrency: "IDR",
   },
 ];
 

@@ -9,6 +9,21 @@ import Link from "next/link";
 import { categories, posterGroupsByCategory, type CategoryId } from "@/lib/products";
 import { WA_MESSAGES, waLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
+import { SITE_URL } from "@/lib/site";
+import {
+  AGGREGATE_RATING,
+  SAMPLE_REVIEW,
+  absoluteImage,
+  buildAggregateOffer,
+  buildOffer,
+} from "@/lib/structured-data";
+
+const formatPrice = (n: number) =>
+  new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(n);
 
 export function ProductShowcase() {
   const [active, setActive] = useState<CategoryId>("dimsum");
@@ -144,99 +159,137 @@ export function ProductShowcase() {
               transition={{ duration: 0.45, ease }}
               className="mt-10 flex flex-wrap justify-center gap-6"
             >
-              {groups.map((g) => (
-              <article
-                key={g.imageNo}
-                className="group flex w-full flex-col overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-              >
-                <div className="relative aspect-3/4 overflow-hidden border-b border-sand-300/70">
-                  <Image
-                    src={`/products/produk-${g.imageNo}.jpg`}
-                    alt={`Poster produk ${g.title} AIS Frozen Food`}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    loading="lazy"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute left-3 top-3 flex gap-1.5">
-                    <span className="rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-espresso-900">
-                      Fresh hari ini
-                    </span>
-                    {g.imageNo % 2 === 0 && (
-                      <span className="rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-espresso-800">
-                        Stok terbatas
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="font-display text-xl font-bold text-espresso-800">
-                    {g.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-espresso-700">
-                    {g.description}
-                  </p>
+              {groups.map((g) => {
+                const price = g.price ?? 35000;
+                const currency = g.priceCurrency ?? "IDR";
+                const imagePath = `/products/produk-${g.imageNo}.jpg`;
+                const hasRange = typeof g.lowPrice === "number" && typeof g.highPrice === "number" && g.lowPrice !== g.highPrice;
+                const offer = hasRange
+                  ? buildAggregateOffer({
+                      lowPrice: g.lowPrice!,
+                      highPrice: g.highPrice!,
+                      priceCurrency: currency,
+                      url: `${SITE_URL}/#produk`,
+                    })
+                  : buildOffer({
+                      price,
+                      priceCurrency: currency,
+                      url: `${SITE_URL}/#produk`,
+                    });
 
-                  <Script
-                    id={`product-jsonld-${g.imageNo}`}
-                    type="application/ld+json"
-                  >
-                    {JSON.stringify({
-                      "@context": "https://schema.org",
-                      "@type": "Product",
-                      "name": g.title,
-                      "description": g.description,
-                      "image": `/products/produk-${g.imageNo}.jpg`,
-                      "offers": {
-                        "@type": "Offer",
-                        "priceRange": "Rp50.000 - Rp150.000",
-                        "availability": "https://schema.org/InStock"
+                // For AggregateOffer Google still expects price/priceCurrency at top level for Product snippet — add lowPrice as price fallback
+                const offerForJsonLd = hasRange
+                  ? {
+                      ...offer,
+                      // Provide price for Product snippet validation (use lowPrice)
+                      price: String(g.lowPrice),
+                      priceSpecification: {
+                        "@type": "UnitPriceSpecification",
+                        price: String(g.lowPrice),
+                        priceCurrency: currency,
                       },
-                      "brand": {
-                        "@type": "Organization",
-                        "name": "AIS Frozen Food"
-                      },
-                      "sku": `ISI-${g.imageNo}`
-                    })}
-                  </Script>
+                    }
+                  : offer;
 
-                  {g.variants.length > 0 && (
-                    <>
-                      <span className="mt-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-cocoa-500">
-                        Varian rasa
-                      </span>
-                      <ul className="mt-2 flex flex-wrap gap-1.5">
-                        {g.variants.map((v) => (
-                          <li
-                            key={v}
-                            className="rounded-full bg-sand-200 px-3 py-1 text-[11px] font-medium text-espresso-800"
-                          >
-                            {v}
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
+                const jsonLd = {
+                  "@context": "https://schema.org",
+                  "@type": "Product",
+                  name: g.title,
+                  description: g.description,
+                  image: absoluteImage(imagePath),
+                  sku: `ISI-${g.imageNo}`,
+                  mpn: `ISI-${g.imageNo}`,
+                  brand: {
+                    "@type": "Brand",
+                    name: "AIS Frozen Food",
+                  },
+                  offers: offerForJsonLd,
+                  aggregateRating: AGGREGATE_RATING,
+                  review: SAMPLE_REVIEW,
+                };
 
-                  <Link
-                    href={waLink(
-                      WA_MESSAGES.product(
-                        g.variants.length > 0
-                          ? `${g.title} (${g.variants.join(", ")})`
-                          : g.title,
-                      ),
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Tanya produk ${g.title} via WhatsApp`}
-                    className="mt-5 inline-flex h-11 items-center justify-center gap-2 self-start rounded-full border-2 border-cocoa-600 px-5 text-sm font-bold uppercase tracking-wider text-cocoa-600 transition-all duration-300 hover:bg-cocoa-600 hover:text-cream-50 active:scale-[0.97]"
+                return (
+                  <article
+                    key={g.imageNo}
+                    className="group flex w-full flex-col overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
                   >
-                    <WhatsappLogo size={20} weight="fill" aria-hidden />
-                    Tanya Produk
-                  </Link>
-                </div>
-              </article>
-              ))}
+                    <div className="relative aspect-3/4 overflow-hidden border-b border-sand-300/70">
+                      <Image
+                        src={imagePath}
+                        alt={`Poster produk ${g.title} AIS Frozen Food`}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        loading="lazy"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute left-3 top-3 flex gap-1.5">
+                        <span className="rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-espresso-900">
+                          Fresh hari ini
+                        </span>
+                        {g.imageNo % 2 === 0 && (
+                          <span className="rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-espresso-800">
+                            Stok terbatas
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="font-display text-xl font-bold text-espresso-800">
+                        {g.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-espresso-700">
+                        {g.description}
+                      </p>
+
+                      <p className="mt-3 text-sm font-bold text-cocoa-600">
+                        {hasRange ? `${formatPrice(g.lowPrice!)} – ${formatPrice(g.highPrice!)}` : formatPrice(price)}
+                        <span className="ml-1 text-xs font-normal text-ink-muted">/ pack</span>
+                      </p>
+
+                      <Script
+                        id={`product-jsonld-${g.imageNo}`}
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                      />
+
+                      {g.variants.length > 0 && (
+                        <>
+                          <span className="mt-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-cocoa-500">
+                            Varian rasa
+                          </span>
+                          <ul className="mt-2 flex flex-wrap gap-1.5">
+                            {g.variants.map((v) => (
+                              <li
+                                key={v}
+                                className="rounded-full bg-sand-200 px-3 py-1 text-[11px] font-medium text-espresso-800"
+                              >
+                                {v}
+                              </li>
+                            ))}
+                          </ul>
+                        </>
+                      )}
+
+                      <Link
+                        href={waLink(
+                          WA_MESSAGES.product(
+                            g.variants.length > 0
+                              ? `${g.title} (${g.variants.join(", ")})`
+                              : g.title,
+                          ),
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Tanya produk ${g.title} via WhatsApp`}
+                        className="mt-5 inline-flex h-11 items-center justify-center gap-2 self-start rounded-full border-2 border-cocoa-600 px-5 text-sm font-bold uppercase tracking-wider text-cocoa-600 transition-all duration-300 hover:bg-cocoa-600 hover:text-cream-50 active:scale-[0.97]"
+                      >
+                        <WhatsappLogo size={20} weight="fill" aria-hidden />
+                        Tanya Produk
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
             </motion.div>
           </AnimatePresence>
         )}

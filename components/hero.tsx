@@ -24,7 +24,7 @@ export function Hero() {
   const y = useTransform(scrollY, [0, 600], [0, reduce ? 0 : -40]);
   return (
     <section id="top" className="relative w-full scroll-mt-24">
-      <div className="relative h-140 overflow-hidden md:h-170">
+      <div className="relative min-h-[640px] overflow-hidden py-10 md:h-170 md:min-h-0 md:py-0">
         <motion.div style={{ y }} className="absolute inset-0">
           <Image
             src="/gallery/toko.jpg"
@@ -44,7 +44,7 @@ export function Hero() {
         />
 
         {/* Overlay content */}
-        <div className="relative z-10 mx-auto flex h-full max-w-3xl flex-col items-center justify-center px-4 text-center">
+        <div className="relative z-10 mx-auto flex min-h-[640px] max-w-3xl flex-col items-center justify-center px-4 py-6 text-center md:min-h-0 md:h-full md:py-0">
           <span className="inline-flex items-center gap-2 rounded-full border border-cream-100/30 bg-espresso-950/40 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-cream-100 backdrop-blur-sm">
             <Snowflake size={14} weight="fill" aria-hidden />
             {business.hours}
@@ -95,11 +95,11 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          <dl className="mt-10 flex flex-wrap items-start justify-center gap-x-10 gap-y-4 border-t border-cream-100/20 pt-6">
+          <dl className="mt-10 flex w-full flex-wrap items-start justify-center gap-x-10 gap-y-4 border-t border-cream-100/20 pt-6">
             {stats.map((s) => (
-              <div key={s.label} className="text-left">
-                <dt className="mb-1 text-xs uppercase tracking-wider text-cream-100/70">{s.label}</dt>
-                <dd className="font-display text-2xl font-bold tracking-tight text-white">
+              <div key={s.label} className="text-center">
+                <dt className="mb-1 text-center text-xs uppercase tracking-wider text-cream-100/70">{s.label}</dt>
+                <dd className="text-center font-display text-2xl font-bold tracking-tight text-white">
                   {s.value}
                 </dd>
               </div>
