@@ -36,7 +36,7 @@ export const SHIPPING_DETAILS = {
 export const MERCHANT_RETURN_POLICY = {
   "@type": "MerchantReturnPolicy",
   applicableCountry: "ID",
-  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteWindow",
+  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
   merchantReturnDays: 7,
   returnMethod: "https://schema.org/ReturnByMail",
   returnFees: "https://schema.org/FreeReturn",
