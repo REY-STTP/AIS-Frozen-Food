@@ -39,7 +39,7 @@ export const MERCHANT_RETURN_POLICY = {
   returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
   merchantReturnDays: 7,
   returnMethod: "https://schema.org/ReturnByMail",
-  returnFees: "https://schema.org/FreeReturn",
+  returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
 };
 
 export const AGGREGATE_RATING = {
@@ -106,21 +106,23 @@ export function buildAggregateOffer({
   priceCurrency = "IDR",
   availability = "https://schema.org/InStock",
   url = `${SITE}/#produk`,
+  offerCount,
 }: {
   lowPrice: number;
   highPrice: number;
   priceCurrency?: string;
   availability?: string;
   url?: string;
+  offerCount?: number;
 }) {
-  const offerCount = 3;
+  const count = offerCount ?? 3;
   return {
     "@type": "AggregateOffer" as const,
     url,
     priceCurrency,
     lowPrice: String(lowPrice),
     highPrice: String(highPrice),
-    offerCount,
+    offerCount: count,
     availability,
     itemCondition: "https://schema.org/NewCondition",
     seller: {

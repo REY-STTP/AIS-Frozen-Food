@@ -1,5 +1,5 @@
 // Simple PWA SW — cache-first untuk assets, network-first untuk navigasi
-const CACHE = "ais-frozen-v1";
+const CACHE = "ais-frozen-v2";
 const ASSETS = ["/", "/manifest.json", "/icon.png", "/logo.png"];
 
 self.addEventListener("install", (e) => {

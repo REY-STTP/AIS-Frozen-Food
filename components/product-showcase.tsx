@@ -163,18 +163,21 @@ export function ProductShowcase() {
                 const price = g.price ?? 35000;
                 const currency = g.priceCurrency ?? "IDR";
                 const imagePath = `/products/produk-${g.imageNo}.jpg`;
+                const slug = g.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+                const productUrl = `${SITE_URL}/?poster=${slug}#produk`;
                 const hasRange = typeof g.lowPrice === "number" && typeof g.highPrice === "number" && g.lowPrice !== g.highPrice;
                 const offer = hasRange
                   ? buildAggregateOffer({
                       lowPrice: g.lowPrice!,
                       highPrice: g.highPrice!,
                       priceCurrency: currency,
-                      url: `${SITE_URL}/#produk`,
+                      url: productUrl,
+                      offerCount: g.variants.length || 1,
                     })
                   : buildOffer({
                       price,
                       priceCurrency: currency,
-                      url: `${SITE_URL}/#produk`,
+                      url: productUrl,
                     });
 
                 // For AggregateOffer Google still expects price/priceCurrency at top level for Product snippet — add lowPrice as price fallback

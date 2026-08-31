@@ -8,7 +8,7 @@ const SITE = SITE_URL;
 export function LocalBusinessJsonLd() {
   const data = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "GroceryStore"],
     "@id": `${SITE}/#business`,
     name: business.name,
     description:
@@ -16,14 +16,17 @@ export function LocalBusinessJsonLd() {
     url: SITE,
     telephone: `+${WHATSAPP_NUMBER}`,
     priceRange: "$$",
+    currenciesAccepted: "IDR",
+    paymentAccepted: "Cash, QRIS, Transfer Bank",
     logo: `${SITE}/logo.png`,
     image: Array.from(new Set(products.map((p) => `${SITE}${p.image}`))),
     address: {
       "@type": "PostalAddress",
-      streetAddress: business.addressShort,
-      addressLocality: "Margorejo",
+      streetAddress: business.addressFull,
+      addressLocality: "Pati",
       addressRegion: "Jawa Tengah",
       addressCountry: "ID",
+      postalCode: "59165",
     },
     geo: {
       "@type": "GeoCoordinates",
@@ -50,6 +53,31 @@ export function LocalBusinessJsonLd() {
     sameAs: [business.tiktokUrl, business.mapsUrl],
   };
 
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+export function OrganizationJsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${SITE}/#organization`,
+    name: business.name,
+    url: SITE,
+    logo: `${SITE}/logo.png`,
+    sameAs: [business.tiktokUrl, business.mapsUrl],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: `+${WHATSAPP_NUMBER}`,
+      contactType: "customer service",
+      areaServed: "ID",
+      availableLanguage: ["id"],
+    },
+  };
   return (
     <script
       type="application/ld+json"

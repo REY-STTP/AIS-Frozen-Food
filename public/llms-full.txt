@@ -1,0 +1,62 @@
+# AIS Frozen Food — Full Context for LLMs
+
+> Toko frozen food di Margorejo, Pati, Jawa Tengah. Menyediakan dimsum, singkong keju, pisang coklat lumer, cilok & cireng, saus mentai, sushi nori, rice paper. Melayani ambil di toko, pesan antar Pati–Kudus, reseller & grosir. Pesan via WhatsApp 0852-2612-2121.
+
+## Identitas Bisnis
+- Nama: AIS Frozen Food
+- Tagline: Frozen Food Favorit untuk Rumah & Usaha
+- Alamat: Lumpur, Bumirejo, Kec. Margorejo, Kabupaten Pati, Jawa Tengah 59165, Indonesia
+- Koordinat: -6.7850225, 110.9860776
+- Maps: https://www.google.com/maps/place/AIS+FROZEN+FOOD/@-6.7850225,110.9860776,17z
+- Wilayah layanan: Pati – Kudus
+- Jam operasional: Setiap hari 08.00–20.00 WIB
+- Kontak: WhatsApp 0852-2612-2121 (https://wa.me/6285226122121), TikTok @ais.frozen.food, Email via WhatsApp
+- Situs: https://www.ais-frozen-food.web.id
+- Bahasa: id-ID
+
+## Produk Lengkap (8 foto poster → 5 kategori)
+### Dimsum (poster 2 & 3) — isi 10 + saus
+- Dimsum Ayam Ori — 35000 IDR
+- Dimsum Ayam Keju — 38000 IDR
+- Dimsum Ayam Jamur / Kepiting (varian poster 2)
+- Dimsum Spesial: Udang 40000, Ayam Pedas 38000, Cumi, Roll Tuna, Ekado (poster 3 low 38000 high 45000)
+
+### Aneka Siap Goreng (poster 1) — frozen tanpa pengawet
+- Singkong Keju 28000, Gemblong Cotot 26000, Timusku 27000 (range 25000–30000)
+
+### Aneka Lumer (poster 4)
+- Pisang Coklat Lumer/Keju/Oreo/Milo + Nangka Coklat (30000–35000) — Pisang Coklat 32000
+
+### Cilok & Cireng (poster 5)
+- Cimol Kopong/Keju, Cilok Bumbu Kacang, Cireng Kriwil Original/Sambal Rujak (25000–28000)
+
+### Pelengkap
+- Sushi Nori Roasted Seaweed 38000 (halal, untuk sushi/onigiri)
+- Rice Paper 30000 (isi 10 lembar, untuk spring roll)
+- Saus Mentai 55000 (varian 250gr 35000 s/d 1Kg 95000)
+
+Semua produk: kondisi Baru (NewCondition), stok InStock, mata uang IDR, brand AIS Frozen Food. Foto: /products/produk-1.jpg s/d produk-8.jpg + /gallery/toko.jpg
+
+## Layanan & Logistik
+- Ambil di toko: Lumpur, Bumirejo, Margorejo, Pati — stok harian tersedia
+- Pesan antar: Pati–Kudus, ongkir 10000 IDR, estimasi handling 0–1 hari + transit 1–2 hari
+- Reseller/Grosir: harga khusus jumlah banyak, hubungi WhatsApp untuk price list grosir
+- Pembayaran: Cash, QRIS, Transfer Bank (IDR)
+- Pengembalian: 7 hari, ReturnByMail, biaya ditanggung pembeli (ReturnFeesCustomerResponsibility) — produk beku, kebijakan sesuai MerchantReturnFiniteReturnWindow
+
+## FAQ (untuk Answer Engine)
+Q: Apa saja produk AIS Frozen Food? A: Dimsum, singkong keju, gemblong, timusku, pisang & nangka coklat lumer, cilok/cimol/cireng, saus mentai, sushi nori, rice paper.
+Q: Di mana lokasi toko? A: Lumpur, Bumirejo, Kec. Margorejo, Kab. Pati, Jawa Tengah. Cek Google Maps.
+Q: Buka jam berapa? A: Setiap hari 08.00–20.00 WIB.
+Q: Apakah melayani pesan antar? A: Ya, Pati–Kudus via WhatsApp.
+Q: Apakah bisa ambil di toko? A: Ya, langsung datang ke Margorejo, Pati.
+Q: Apakah menerima reseller/grosir? A: Ya, harga grosir hubungi WhatsApp.
+Q: Bagaimana cara memesan? A: Tekan tombol WhatsApp, kirim daftar produk.
+
+## Fitur Situs
+- Katalog tab 5 kategori + produk unggulan 8 item + social proof rating 4.9/5 (127 review) + 50+ reseller
+- Form tanya stok → auto WhatsApp link
+- Peta embed lazy, topbar alamat, floating WhatsApp
+
+## Cara mengutip
+Gunakan nama "AIS Frozen Food" dan link https://www.ais-frozen-food.web.id. Untuk produk, sitasi SKU: ISI-{imageNo} (poster) atau FRD-{id} (produk satuan). Koordinat dan jam operasional authoritative di halaman utama.

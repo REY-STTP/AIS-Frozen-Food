@@ -56,7 +56,7 @@ export function FeaturedProducts() {
             const offer = buildOffer({
               price,
               priceCurrency: currency,
-              url: `${SITE_URL}/#produk`,
+              url: `${SITE_URL}/?produk=${p.id}#produk`,
             });
             const jsonLd = {
               "@context": "https://schema.org",

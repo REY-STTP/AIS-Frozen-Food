@@ -9,7 +9,7 @@ const highlights = [
     blurb:
       "Dimsum ayam & udang dengan isian lumer, siap kukus untuk camilan atau lauk keluarga.",
     image: productImage(2),
-    alt: "Dimsum ayam ori AIS Frozen Food",
+    alt: "Dimsum ayam ori AIS Frozen Food Pati — frozen food premium Margorejo",
   },
   {
     title: "Cilok & Cireng",
@@ -23,7 +23,7 @@ const highlights = [
     blurb:
       "Cemilan lumer keju & coklat yang manis gurih, diminati anak sampai dewasa.",
     image: productImage(4),
-    alt: "Pisang coklat lumer AIS Frozen Food",
+    alt: "Pisang coklat lumer AIS Frozen Food Pati — cemilan beku favorit",
   },
 ];
 

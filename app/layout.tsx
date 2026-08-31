@@ -4,14 +4,13 @@ import "./globals.css";
 import Script from "next/script";
 import { business } from "@/lib/business";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
-import { LocalBusinessJsonLd } from "@/components/seo";
+import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo";
 import { SITE_URL } from "@/lib/site";
 import { WebVitals } from "@/components/web-vitals";
 import { CookieConsent } from "@/components/cookie-consent";
 import { PwaRegister } from "@/components/pwa-register";
 
 const SITE = SITE_URL;
-const OG_IMAGE = `${SITE}/products/produk-1.jpg`;
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -47,23 +46,28 @@ export const metadata: Metadata = {
   applicationName: business.name,
   alternates: {
     canonical: SITE,
+    languages: {
+      "id-ID": SITE,
+      "x-default": SITE,
+    },
   },
   openGraph: {
     type: "website",
     url: SITE,
     locale: "id_ID",
+    alternateLocale: ["en_US"],
     siteName: business.name,
     title: `${business.name} — ${business.tagline}`,
     description:
       "Toko frozen food di Pati: dimsum, singkong keju, pisang coklat lumer, cilok & cireng, saus mentai. Ambil di toko atau pesan antar Pati–Kudus. Buka tiap hari 08.00–20.00 WIB.",
-    images: [{ url: OG_IMAGE, width: 905, height: 1280, alt: business.name }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${business.name} — ${business.tagline}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${business.name} — ${business.tagline}`,
     description:
       "Toko frozen food di Pati: dimsum, lumer, cilok & cireng, saus mentai. Pesan via WhatsApp.",
-    images: [OG_IMAGE],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -74,8 +78,8 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.ico", sizes: "any" },
     ],
     apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
     shortcut: "/favicon.ico",
@@ -86,11 +90,13 @@ export const metadata: Metadata = {
   other: {
     "geo.region": "ID-JT",
     "geo.placename": "Pati",
+    "geo.position": "-6.7850225;110.9860776",
+    ICBM: "-6.7850225, 110.9860776",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f5f1e8",
+  themeColor: "#5D4037",
   width: "device-width",
   initialScale: 1,
 };
@@ -106,9 +112,12 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://wa.me" />
         <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://static.fonts.githubusercontent.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://plausible.io" />
+        <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM context" />
+        <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM full context" />
         {/* Plausible analytics — ganti data-domain ke domain produksi */}
         <Script
           defer
@@ -127,6 +136,7 @@ export default function RootLayout({
         {children}
         <FloatingWhatsApp />
         <LocalBusinessJsonLd />
+        <OrganizationJsonLd />
         <WebVitals />
         <CookieConsent />
         <PwaRegister />
@@ -151,6 +161,24 @@ export default function RootLayout({
                 "item": `${SITE}/#produk`
               }
             ]
+          })}
+        </Script>
+        <Script
+          id="speakable-jsonld"
+          type="application/ld+json"
+        >
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": `${SITE}/#webpage`,
+            url: SITE,
+            name: `${business.name} — ${business.tagline}`,
+            isPartOf: { "@id": `${SITE}/#business` },
+            speakable: {
+              "@type": "SpeakableSpecification",
+              cssSelector: ["#produk", "#faq", "h1"],
+            },
+            inLanguage: "id-ID",
           })}
         </Script>
       </body>
