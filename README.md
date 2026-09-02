@@ -37,7 +37,7 @@
 | 🔝 **Top Bar & Sticky Header** | Alamat/jam/sosmed + header sticky, drawer mobile `role=dialog` `aria-modal`, keyboard nav arrow/Home/End di tab produk |
 | 🖼️ **Hero** | Foto toko `priority` + `fetchPriority high`, urgency badge `Fresh hari ini / Stok terbatas`, A/B CTA copy & warna (`lib/ab.ts`), stats `dl` |
 | 🏷️ **Kenapa Memilih Kami** | 3 kartu arch + hover lift, `prefers-reduced-motion` |
-| 🍱 **Katalog Produk** | Tab kategori + kartu per poster + chip varian, `Product` JSON-LD per item, skeleton `animate-pulse` saat ganti tab, badge Fresh/Stok, `aria-label` deskriptif |
+| 🍱 **Katalog Produk** | Tab kategori + kartu per poster + chip varian, `Product`+`Offer`/`AggregateOffer` per item + `ItemList` `Product` kolektif (server, 8 poster), skeleton `animate-pulse` saat ganti tab, badge Fresh/Stok, `aria-label` deskriptif |
 | ⭐ **Produk Unggulan** | Grid 4 kolom 8 item, `Product` JSON-LD, Fresh badge, link WA `aria-label` |
 | 💬 **Social Proof** | 3 testimoni rating 5 (layout `flex-col flex-1` agar nama tidak geser karena panjang kalimat) + reseller logos + stats 4.9/5 |
 | 📝 **Inquiry Form Mini** | `components/inquiry-form.tsx` — nama/WA/catatan → auto `wa.me` link |
@@ -65,26 +65,26 @@
 ```text
 AIS-Frozen-Food/
 ├── app/
-│   ├── layout.tsx            # font swap + preconnect wa.me/google/fonts.gstatic + Plausible + WebVitals + CookieConsent + PwaRegister + BreadcrumbList ld+json
-│   ├── page.tsx              # Hero → WhyAIS → ProductShowcase → Featured → SocialProof → InquiryForm → Reseller → Delivery → Faq → Contact
+│   ├── layout.tsx            # font swap + preconnect + Plausible + WebVitals + CookieConsent + PwaRegister + BreadcrumbList/WebPage speakable + WebSite/Organization/LocalBusiness ld+json, icons 512/192/48+favicon, OG ?v=2
+│   ├── page.tsx              # + ItemList Product kolektif (server, 8 poster) → Hero → WhyAIS → ProductShowcase → Featured → SocialProof → InquiryForm → Reseller → Delivery → Faq → Contact
 │   ├── globals.css           # Tailwind v4 tokens cream/cocoa/espresso
-│   ├── icon.png / opengraph-image.tsx  # OG 1200×630 next/og
+│   ├── icon.png + icon-192.png + icon-48.png / opengraph-image.tsx  # OG 1200×630 next/og, revalidate 86400, cache-bust ?v=2
 │   ├── error.tsx / global-error.tsx / not-found.tsx
-│   ├── robots.ts             # allow:/ disallow /api /login /admin /draft
-│   └── sitemap.ts            # hanya / (hash #produk tidak di-sitemap, siap /produk/[slug])
+│   ├── robots.ts             # allow:/ disallow /api /login /admin/draft + 17 AI bots (GPTBot/OAI-SearchBot/GoogleOther/Claude/Perplexity/Applebot/FacebookBot/cohere-ai/DuckAssistBot...)
+│   └── sitemap.ts            # weekly + lastModified: now + images 11, hanya / (hash #produk tidak di-sitemap)
 ├── proxy.ts                  # 308 redirect ke NEXT_PUBLIC_SITE_URL host kanonik (www)
 ├── components/
 │   ├── ui/whatsapp-button.tsx + .stories.tsx
-│   ├── hero.tsx (A/B), product-showcase.tsx (skeleton+urgency), featured-products.tsx
+│   ├── hero.tsx (A/B, H1 sr-only "AIS Frozen Food —" untuk SERP grounding), product-showcase.tsx (skeleton+urgency, Product Offer per kartu), featured-products.tsx
 │   ├── social-proof.tsx (flex-1 layout fix), inquiry-form.tsx
 │   ├── exit-intent-popup.tsx, sticky-cta-bar.tsx, cookie-consent.tsx, pwa-register.tsx, web-vitals.tsx
 │   ├── delivery-location.tsx (IntersectionObserver), floating-whatsapp.tsx (tel fallback)
-│   ├── seo.tsx, faq.tsx, navbar.tsx, footer.tsx ...
+│   ├── seo.tsx (LocalBusiness/Organization/WebSite + alternateName), faq.tsx (FAQPage), navbar.tsx, footer.tsx ...
 ├── lib/
 │   ├── business.ts, products.ts, site.ts (SITE_URL), whatsapp.ts
 │   ├── design-tokens.ts, utils.ts (validateEnv), analytics.ts (track), ab.ts (useAB), catalog.ts (Meta API stub), sentry.ts
 ├── public/
-│   ├── logo.png, icon.png, manifest.json, sw.js, llms.txt
+│   ├── logo.png, icon.png + icon-192.png + icon-48.png, manifest.json (short_name AIS Frozen Food, icons 512/192/48), sw.js, llms.txt (90 baris spec, absolute URLs) + llms-full.txt
 │   ├── products/produk-1…8.jpg, gallery/toko.jpg
 ├── docs/
 │   ├── API.md (rencana /api/products, /inquiry, /catalog/sync) 
@@ -146,11 +146,12 @@ NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 
 ## 🔍 SEO & GEO
 
-- **JSON-LD:** `LocalBusiness` (`seo.tsx`), `FAQPage` (`faq.tsx`), `Product`+`Offer` per kartu, `BreadcrumbList` (`Beranda → #produk`)
-- **Routes:** `robots.ts` + `sitemap.ts` (hanya `/`, hash tidak di-sitemap) + `public/llms.txt` + `manifest.json`
-- **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` + `twitter` + `app/opengraph-image.tsx`, `geo.region ID-JT`, `verification.google`
-- **Aksesibilitas:** `sr-only` → visible `dt`, `aria-modal`/`role=dialog`, `aria-label` deskriptif per produk, `tabIndex` 0/-1, kontras `text-espresso-700` AA
-- **Validasi:** Google Rich Results Test, Schema Validator, Search Console (meta tag `ndkQkr...`)
+- **JSON-LD:** `WebSite` (`AIS Frozen Food` + `alternateName`, `SearchAction`) + `Organization` + `LocalBusiness/GroceryStore` (`seo.tsx`), `FAQPage` (`faq.tsx`), `Product`+`Offer`/`AggregateOffer` per kartu + `ItemList` kolektif 8 poster (`page.tsx`), `BreadcrumbList` (`Beranda → #produk`), `WebPage` `speakable` `["#produk","#faq","h1"]`
+- **Routes:** `robots.ts` (allow:/ + 17 AI bots) + `sitemap.ts` (weekly `lastModified: now` + 11 images) + `public/llms.txt` (90 baris spec, absolute URLs + harga) + `public/llms-full.txt` + `manifest.json` (icons 512/192/48)
+- **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` `siteName: AIS Frozen Food` + `twitter` + `app/opengraph-image.tsx` (`revalidate 86400`, `?v=2` bust), `geo.region ID-JT`, `verification.google`, `llms.txt` hint `<link alternate>`
+- **Favicon:** `icon.png 512 maskable` + `icon-192.png` + `icon-48.png` + `favicon.ico any` + `apple-icon.png 180` (next.config cache 86400, proxy exclude)
+- **Aksesibilitas:** `sr-only` brand di H1 + `sr-only` → visible `dt`, `aria-modal`/`role=dialog`, `aria-label` deskriptif per produk, `tabIndex` 0/-1, kontras AA
+- **Validasi:** Google Rich Results Test (WebSite/ItemList), Schema Validator, Search Console `ndkQkr...`, Favicon `google.com/s2/favicons?domain=`, OG Debugger `?v=2`
 
 ---
 
