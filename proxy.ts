@@ -44,5 +44,5 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.png|logo.png|apple-icon.png|opengraph-image|gallery|products|robots.txt|sitemap.xml|llms.txt|llms-full.txt|manifest.json|sw.js).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.png|icon-48.png|icon-192.png|logo.png|apple-icon.png|opengraph-image|gallery|products|robots.txt|sitemap.xml|llms.txt|llms-full.txt|manifest.json|sw.js).*)"],
 };

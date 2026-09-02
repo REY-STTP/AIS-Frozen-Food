@@ -44,6 +44,14 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
       },
       {
+        source: "/icon-192.png",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
+      },
+      {
+        source: "/icon-48.png",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
+      },
+      {
         source: "/favicon.ico",
         headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
       },

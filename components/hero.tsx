@@ -51,7 +51,7 @@ export function Hero() {
           </span>
 
           <h1 className="mt-5 font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
-            Frozen Food Favorit untuk{" "}
+            <span className="sr-only">AIS Frozen Food — </span>Frozen Food Favorit untuk{" "}
             <em className="italic text-cocoa-200">Rumah &amp; Usaha</em>
           </h1>
 

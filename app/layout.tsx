@@ -4,7 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import { business } from "@/lib/business";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
-import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo";
+import { LocalBusinessJsonLd, OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo";
 import { SITE_URL } from "@/lib/site";
 import { WebVitals } from "@/components/web-vitals";
 import { CookieConsent } from "@/components/cookie-consent";
@@ -60,14 +60,14 @@ export const metadata: Metadata = {
     title: `${business.name} — ${business.tagline}`,
     description:
       "Toko frozen food di Pati: dimsum, singkong keju, pisang coklat lumer, cilok & cireng, saus mentai. Ambil di toko atau pesan antar Pati–Kudus. Buka tiap hari 08.00–20.00 WIB.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${business.name} — ${business.tagline}` }],
+    images: [{ url: "/opengraph-image?v=2", width: 1200, height: 630, alt: `${business.name} — ${business.tagline}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${business.name} — ${business.tagline}`,
     description:
       "Toko frozen food di Pati: dimsum, lumer, cilok & cireng, saus mentai. Pesan via WhatsApp.",
-    images: ["/opengraph-image"],
+    images: ["/opengraph-image?v=2"],
   },
   robots: {
     index: true,
@@ -79,6 +79,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-48.png", type: "image/png", sizes: "48x48" },
       { url: "/favicon.ico", sizes: "any" },
     ],
     apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
@@ -137,6 +139,7 @@ export default function RootLayout({
         <FloatingWhatsApp />
         <LocalBusinessJsonLd />
         <OrganizationJsonLd />
+        <WebSiteJsonLd />
         <WebVitals />
         <CookieConsent />
         <PwaRegister />

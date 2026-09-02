@@ -21,7 +21,7 @@ export function Footer() {
             height={48}
             className="h-11 w-11 rounded-full object-cover"
           />
-          <span className="font-display text-3xl font-bold tracking-widest text-white">
+          <span className="font-display text-2xl font-bold tracking-widest text-white">
             AIS FROZEN FOOD
           </span>
         </Link>

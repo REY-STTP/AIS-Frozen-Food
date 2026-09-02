@@ -85,3 +85,29 @@ export function OrganizationJsonLd() {
     />
   );
 }
+
+export function WebSiteJsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE}/#website`,
+    url: SITE,
+    name: business.name,
+    alternateName: ["AIS Frozen", "AIS Frozen Food Pati", "Toko AIS Frozen Food"],
+    description:
+      "Toko frozen food di Margorejo, Pati — dimsum, lumer, cilok & cireng, saus mentai. Ambil di toko atau pesan antar Pati–Kudus.",
+    publisher: { "@id": `${SITE}/#organization` },
+    inLanguage: "id-ID",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE}/#produk?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
