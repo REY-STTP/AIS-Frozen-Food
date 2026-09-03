@@ -5,7 +5,7 @@ import Script from "next/script";
 import { business } from "@/lib/business";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { LocalBusinessJsonLd, OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, BING_SITE_VERIFICATION } from "@/lib/site";
 import { WebVitals } from "@/components/web-vitals";
 import { CookieConsent } from "@/components/cookie-consent";
 import { PwaRegister } from "@/components/pwa-register";
@@ -60,14 +60,14 @@ export const metadata: Metadata = {
     title: `${business.name} — ${business.tagline}`,
     description:
       "Toko frozen food di Pati: dimsum, singkong keju, pisang coklat lumer, cilok & cireng, saus mentai. Ambil di toko atau pesan antar Pati–Kudus. Buka tiap hari 08.00–20.00 WIB.",
-    images: [{ url: "/opengraph-image?v=2", width: 1200, height: 630, alt: `${business.name} — ${business.tagline}` }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: `${business.name} — ${business.tagline}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${business.name} — ${business.tagline}`,
     description:
       "Toko frozen food di Pati: dimsum, lumer, cilok & cireng, saus mentai. Pesan via WhatsApp.",
-    images: ["/opengraph-image?v=2"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -88,6 +88,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "ndkQkr971m_t4mvZTzgt4EZk4Pzpi0AiTU14zF3ckAw",
+    other: {
+      "msvalidate.01": BING_SITE_VERIFICATION,
+    },
   },
   other: {
     "geo.region": "ID-JT",

@@ -65,10 +65,10 @@
 ```text
 AIS-Frozen-Food/
 ├── app/
-│   ├── layout.tsx            # font swap + preconnect + Plausible + WebVitals + CookieConsent + PwaRegister + BreadcrumbList/WebPage speakable + WebSite/Organization/LocalBusiness ld+json, icons 512/192/48+favicon, OG ?v=2
+│   ├── layout.tsx            # font swap + preconnect + Plausible + WebVitals + CookieConsent + PwaRegister + BreadcrumbList/WebPage speakable + WebSite/Organization/LocalBusiness ld+json, icons 512/192/48+favicon, OG static /og-image.png, Google + Bing verification
 │   ├── page.tsx              # + ItemList Product kolektif (server, 8 poster) → Hero → WhyAIS → ProductShowcase → Featured → SocialProof → InquiryForm → Reseller → Delivery → Faq → Contact
 │   ├── globals.css           # Tailwind v4 tokens cream/cocoa/espresso
-│   ├── icon.png + icon-192.png + icon-48.png / opengraph-image.tsx  # OG 1200×630 next/og, revalidate 86400, cache-bust ?v=2
+│   ├── icon.png + icon-192.png + icon-48.png         # favicon multi-size + maskable
 │   ├── error.tsx / global-error.tsx / not-found.tsx
 │   ├── robots.ts             # allow:/ disallow /api /login /admin/draft + 17 AI bots (GPTBot/OAI-SearchBot/GoogleOther/Claude/Perplexity/Applebot/FacebookBot/cohere-ai/DuckAssistBot...)
 │   └── sitemap.ts            # weekly + lastModified: now + images 11, hanya / (hash #produk tidak di-sitemap)
@@ -84,7 +84,7 @@ AIS-Frozen-Food/
 │   ├── business.ts, products.ts, site.ts (SITE_URL), whatsapp.ts
 │   ├── design-tokens.ts, utils.ts (validateEnv), analytics.ts (track), ab.ts (useAB), catalog.ts (Meta API stub), sentry.ts
 ├── public/
-│   ├── logo.png, icon.png + icon-192.png + icon-48.png, manifest.json (short_name AIS Frozen Food, icons 512/192/48), sw.js, llms.txt (90 baris spec, absolute URLs) + llms-full.txt
+│   ├── logo.png, icon.png + icon-192.png + icon-48.png, og-image.png (1200×630 static OG/Twitter), manifest.json (short_name AIS Frozen Food, icons 512/192/48), sw.js, llms.txt (90 baris spec, absolute URLs) + llms-full.txt
 │   ├── products/produk-1…8.jpg, gallery/toko.jpg
 ├── docs/
 │   ├── API.md (rencana /api/products, /inquiry, /catalog/sync) 
@@ -113,7 +113,7 @@ npm run lint
 npm run build && npm start
 ```
 
-**Validasi:** `npm run build` harus `✓ Generating static pages (7/7)` + `ƒ Proxy`.
+**Validasi:** `npm run build` harus `✓ Generating static pages (8/8)` + `ƒ Proxy`.
 
 ---
 
@@ -138,7 +138,7 @@ NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 # SENTRY_DSN=... (Sentry)
 # NEXT_PUBLIC_PLAUSIBLE_DOMAIN=...
 ```
-`lib/site.ts` fallback `https://www.ais-frozen-food.vercel.app`. Selalu `www` agar `proxy.ts` 308 konsisten. Google verification di `app/layout.tsx:77` `verification.google`.
+`lib/site.ts` fallback `https://www.ais-frozen-food.web.id`. Selalu `www` agar `proxy.ts` 308 konsisten. Google verification di `app/layout.tsx` `verification.google` + Bing verification `msvalidate.01` via `verification.other`.
 
 **5. Desain tokens — `lib/design-tokens.ts`** (cream/espresso/cocoa/sand, spacing, typography)
 
@@ -148,10 +148,10 @@ NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 
 - **JSON-LD:** `WebSite` (`AIS Frozen Food` + `alternateName`, `SearchAction`) + `Organization` + `LocalBusiness/GroceryStore` (`seo.tsx`), `FAQPage` (`faq.tsx`), `Product`+`Offer`/`AggregateOffer` per kartu + `ItemList` kolektif 8 poster (`page.tsx`), `BreadcrumbList` (`Beranda → #produk`), `WebPage` `speakable` `["#produk","#faq","h1"]`
 - **Routes:** `robots.ts` (allow:/ + 17 AI bots) + `sitemap.ts` (weekly `lastModified: now` + 11 images) + `public/llms.txt` (90 baris spec, absolute URLs + harga) + `public/llms-full.txt` + `manifest.json` (icons 512/192/48)
-- **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` `siteName: AIS Frozen Food` + `twitter` + `app/opengraph-image.tsx` (`revalidate 86400`, `?v=2` bust), `geo.region ID-JT`, `verification.google`, `llms.txt` hint `<link alternate>`
+- **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` `siteName: AIS Frozen Food` + `twitter` (keduanya reference static `/og-image.png` 1200×630), `geo.region ID-JT`, `verification.google` + `verification.other.msvalidate.01` (Bing Webmaster), `llms.txt` hint `<link alternate>`
 - **Favicon:** `icon.png 512 maskable` + `icon-192.png` + `icon-48.png` + `favicon.ico any` + `apple-icon.png 180` (next.config cache 86400, proxy exclude)
 - **Aksesibilitas:** `sr-only` brand di H1 + `sr-only` → visible `dt`, `aria-modal`/`role=dialog`, `aria-label` deskriptif per produk, `tabIndex` 0/-1, kontras AA
-- **Validasi:** Google Rich Results Test (WebSite/ItemList), Schema Validator, Search Console `ndkQkr...`, Favicon `google.com/s2/favicons?domain=`, OG Debugger `?v=2`
+- **Validasi:** Google Rich Results Test (WebSite/ItemList), Schema Validator, Search Console `ndkQkr...`, Bing Webmaster Tools (msvalidate.01), Favicon `google.com/s2/favicons?domain=`, OG Debugger (static `/og-image.png`)
 
 ---
 
