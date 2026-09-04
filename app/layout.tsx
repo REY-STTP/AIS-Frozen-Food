@@ -116,6 +116,8 @@ export default function RootLayout({
     >
       <head>
         <link rel="preconnect" href="https://wa.me" />
+        <link rel="preconnect" href="https://basemaps.cartocdn.com" />
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

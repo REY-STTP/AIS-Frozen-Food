@@ -10,7 +10,6 @@ import { ContactCTA } from "@/components/contact-cta";
 import { Faq } from "@/components/faq";
 import { Footer } from "@/components/footer";
 import { ExitIntentPopup } from "@/components/exit-intent-popup";
-import { StickyCtaBar } from "@/components/sticky-cta-bar";
 import { SocialProof } from "@/components/social-proof";
 import { InquiryForm } from "@/components/inquiry-form";
 import { posterGroups } from "@/lib/products";
@@ -77,7 +76,6 @@ export default function HomePage() {
       </main>
       <Footer />
       <ExitIntentPopup />
-      <StickyCtaBar />
     </>
   );
 }

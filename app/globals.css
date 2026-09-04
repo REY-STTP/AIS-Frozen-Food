@@ -29,6 +29,25 @@
   --color-espresso-950: #211612;
 
   --color-ink-muted: #6d5c50;
+
+  /* shadcn/ui tokens for mapcn — mapped to AIS palette */
+  --color-background: #fdfbf5;
+  --color-foreground: #2b1e17;
+  --color-card: #ffffff;
+  --color-card-foreground: #2b1e17;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #2b1e17;
+  --color-primary: #7b4f3b;
+  --color-primary-foreground: #fdfbf5;
+  --color-secondary: #ebe4d6;
+  --color-secondary-foreground: #3b2a22;
+  --color-muted: #ebe4d6;
+  --color-muted-foreground: #6d5c50;
+  --color-accent: #ebe4d6;
+  --color-accent-foreground: #3b2a22;
+  --color-border: #ddd2bd;
+  --color-input: #ddd2bd;
+  --color-ring: #7b4f3b;
 }
 
 @layer base {
@@ -70,5 +89,39 @@
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
+  }
+}
+
+/* mapcn / MapLibre overrides — must stay inside @layer base for specificity */
+@layer base {
+  .maplibregl-popup-content {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+  .maplibregl-popup-tip {
+    display: none !important;
+  }
+  .maplibregl-ctrl-attrib {
+    background: var(--color-cream-50) !important;
+    color: var(--color-ink-muted) !important;
+    border: 1px solid var(--color-sand-300) !important;
+    border-radius: 0.375rem !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  }
+  .maplibregl-ctrl-attrib a {
+    color: var(--color-ink-muted) !important;
+  }
+  .maplibregl-ctrl-attrib a:hover {
+    color: var(--color-espresso-900) !important;
+  }
+  .maplibregl-ctrl-attrib-button {
+    background: transparent !important;
+  }
+  @media (prefers-color-scheme: dark) {
+    .maplibregl-ctrl-attrib-button {
+      filter: invert(1);
+    }
   }
 }

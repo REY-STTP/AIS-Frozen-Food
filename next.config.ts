@@ -2,12 +2,13 @@ import type { NextConfig } from "next";
 
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com https://unpkg.com https://plausible.io",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
-  "img-src 'self' data: blob: https: https://*.google.com https://*.gstatic.com https://*.googleapis.com",
+  "img-src 'self' data: blob: https: https://*.google.com https://*.gstatic.com https://*.googleapis.com https://*.basemaps.cartocdn.com https://basemaps.cartocdn.com",
   "frame-src 'self' https://www.google.com https://maps.google.com",
-  "connect-src 'self' https://wa.me https://www.google.com https://*.googleapis.com",
+  "connect-src 'self' https://wa.me https://www.google.com https://*.googleapis.com https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com https://unpkg.com https://plausible.io",
+  "worker-src 'self' blob: https://unpkg.com",
   "base-uri 'self'",
   "form-action 'self'",
 ].join("; ");
@@ -17,7 +18,7 @@ const nextConfig: NextConfig = {
     qualities: [60, 85],
     formats: ["image/avif", "image/webp"],
   },
-  allowedDevOrigins: ["192.168.100.12"],
+  allowedDevOrigins: ["192.168.100.12", "192.168.1.158"],
   async headers() {
     return [
       {
