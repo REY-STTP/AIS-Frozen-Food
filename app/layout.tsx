@@ -8,7 +8,6 @@ import { LocalBusinessJsonLd, OrganizationJsonLd, WebSiteJsonLd } from "@/compon
 import { SITE_URL, BING_SITE_VERIFICATION } from "@/lib/site";
 import { WebVitals } from "@/components/web-vitals";
 import { CookieConsent } from "@/components/cookie-consent";
-import { PwaRegister } from "@/components/pwa-register";
 import { Analytics } from "@vercel/analytics/react";
 
 const SITE = SITE_URL;
@@ -43,7 +42,11 @@ export const metadata: Metadata = {
     "AIS Frozen Food",
     "cemilan beku",
   ],
-  authors: [{ name: business.name }],
+  authors: [{ name: business.name, url: SITE }],
+  creator: business.name,
+  publisher: business.name,
+  category: "food",
+  referrer: "strict-origin-when-cross-origin",
   applicationName: business.name,
   alternates: {
     canonical: SITE,
@@ -73,10 +76,14 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
-  category: "food",
-  manifest: "/manifest.json",
   icons: {
     icon: [
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
@@ -98,11 +105,13 @@ export const metadata: Metadata = {
     "geo.placename": "Pati",
     "geo.position": "-6.7850225;110.9860776",
     ICBM: "-6.7850225, 110.9860776",
+    "content-language": "id-ID",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#5D4037",
+  themeColor: "#F5F1E8",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -112,16 +121,14 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="id"
+      lang="id-ID"
       className={`${playfair.variable} ${poppins.variable}`}
     >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://wa.me" />
         <link rel="dns-prefetch" href="https://www.google.com" />
-        <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM context" />
-        <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM full context" />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM context" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLM full context" />
       </head>
       <body className="antialiased overflow-x-hidden">
         <a
@@ -137,7 +144,6 @@ export default function RootLayout({
         <WebSiteJsonLd />
         <WebVitals />
         <CookieConsent />
-        <PwaRegister />
         <Analytics />
         <Script
           id="breadcrumb-jsonld"
@@ -172,7 +178,7 @@ export default function RootLayout({
             "@id": `${SITE}/#webpage`,
             url: SITE,
             name: `${business.name} — ${business.tagline}`,
-            isPartOf: { "@id": `${SITE}/#business` },
+            isPartOf: { "@id": `${SITE}/#website` },
             speakable: {
               "@type": "SpeakableSpecification",
               cssSelector: ["#produk", "#faq", "h1"],

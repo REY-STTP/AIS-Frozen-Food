@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { WA_MESSAGES, waLink, WHATSAPP_NUMBER } from "@/lib/whatsapp";
-import { trackTelClick } from "@/lib/analytics";
+import { trackTelClick, trackWhatsAppClick } from "@/lib/analytics";
 
 export function FloatingWhatsApp() {
   const [show, setShow] = useState(false);
@@ -34,6 +34,11 @@ export function FloatingWhatsApp() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat WhatsApp AIS Frozen Food"
+              onClick={() => {
+                try {
+                  trackWhatsAppClick("floating");
+                } catch {}
+              }}
               className="group flex h-14 w-14 items-center justify-center rounded-full bg-cocoa-600 text-cream-50 shadow-lg transition-all duration-300 hover:bg-cocoa-700 active:scale-95 md:h-16 md:w-16"
             >
               <WhatsappLogo size={28} weight="fill" aria-hidden />

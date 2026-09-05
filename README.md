@@ -47,7 +47,6 @@
 | 💬 **Smart WhatsApp** | `WhatsAppButton` reusable + `floating-whatsapp.tsx` (WA + `tel:+6285226122121` fallback) + tracking `lib/analytics.ts` (Plausible/gtag/dataLayer), tombol lokasi `grid grid-cols-2` kiri-kanan di mobile |
 | ❓ **FAQ** | Accordion `<details>` + `FAQPage` JSON-LD |
 | 🛡️ **Error Handling** | `app/error.tsx` + `app/global-error.tsx` (`html/body` wrapper) + `app/not-found.tsx` 404 custom (kategori + WA) |
-| 📱 **PWA** | `public/manifest.json` + `public/sw.js` cache-first + `pwa-register.tsx`, `themeColor #f5f1e8` |
 | 🍪 **Cookie Consent** | `cookie-consent.tsx` localStorage `ais-cookie-consent` |
 
 ---
@@ -65,26 +64,25 @@
 ```text
 AIS-Frozen-Food/
 ├── app/
-│   ├── layout.tsx            # font swap + preconnect (wa.me/google/fonts) + Plausible + WebVitals + CookieConsent + PwaRegister + BreadcrumbList/WebPage speakable + WebSite/Organization/LocalBusiness ld+json, icons 512/192/48+favicon, OG static /og-image.png, Google + Bing verification
+│   ├── layout.tsx            # font swap + WebVitals + CookieConsent + BreadcrumbList/WebPage speakable + WebSite/Organization/LocalBusiness ld+json, icons 512/192/48+favicon, OG static /og-image.png, Google + Bing verification
 │   ├── page.tsx              # + ItemList Product kolektif (server, 8 poster) → Hero → WhyAIS → ProductShowcase → Featured → SocialProof → InquiryForm → Reseller → Delivery → Faq → Contact (tanpa StickyCtaBar)
 │   ├── globals.css           # Tailwind v4 tokens cream/cocoa/espresso
-│   ├── icon.png + icon-192.png + icon-48.png         # favicon multi-size + maskable
 │   ├── error.tsx / global-error.tsx / not-found.tsx
-│   ├── robots.ts             # allow:/ disallow /api /login /admin/draft + 17 AI bots (GPTBot/OAI-SearchBot/GoogleOther/Claude/Perplexity/Applebot/FacebookBot/cohere-ai/DuckAssistBot...)
-│   └── sitemap.ts            # weekly + lastModified: now + images 11, hanya / (hash #produk tidak di-sitemap)
+│   ├── robots.ts             # allow:/ disallow /api /login /admin/draft + 17 AI bots (GPTBot/OAI-SearchBot/GoogleOther/Claude/Perplexity/Applebot/FacebookBot/cohere-ai/DuckAssistBot...), host: www.ais-frozen-food.web.id
+│   └── sitemap.ts            # weekly + lastModified: now + images 12 (8 produk + toko + logo + og-image), hanya / (hash #produk tidak di-sitemap)
 ├── proxy.ts                  # 308 redirect ke NEXT_PUBLIC_SITE_URL host kanonik (www)
 ├── components/
 │   ├── ui/whatsapp-button.tsx + .stories.tsx
 │   ├── hero.tsx (A/B, H1 sr-only "AIS Frozen Food —" untuk SERP grounding), product-showcase.tsx (skeleton+urgency, Product Offer per kartu), featured-products.tsx
 │   ├── social-proof.tsx (flex-1 layout fix), inquiry-form.tsx
-│   ├── exit-intent-popup.tsx, cookie-consent.tsx, pwa-register.tsx, web-vitals.tsx
+│   ├── exit-intent-popup.tsx, cookie-consent.tsx, web-vitals.tsx
 │   ├── delivery-location.tsx (IntersectionObserver 200px + iframe GMaps business.mapsEmbed, h-90/lg:h-140, grid-cols-2 buttons), floating-whatsapp.tsx (tel fallback)
 │   ├── seo.tsx (LocalBusiness/Organization/WebSite + alternateName), faq.tsx (FAQPage), navbar.tsx, footer.tsx ...
 ├── lib/
 │   ├── business.ts (mapsUrl/mapsEmbed pb terbaru + geo -6.785022493212046,110.98350267367005), products.ts, site.ts (SITE_URL), whatsapp.ts
 │   ├── design-tokens.ts, utils.ts (cn + validateEnv), analytics.ts (track), ab.ts (useAB), catalog.ts (Meta API stub)
 ├── public/
-│   ├── logo.png, icon.png + icon-192.png + icon-48.png, og-image.png (1200×630 static OG/Twitter), manifest.json (short_name AIS Frozen Food, icons 512/192/48), sw.js, llms.txt (90 baris spec, absolute URLs) + llms-full.txt
+│   ├── logo.png, icon.png + icon-192.png + icon-48.png + apple-icon.png 180 + favicon.ico, og-image.png (1200×630 static OG/Twitter), llms.txt + llms-full.txt
 │   ├── products/produk-1…8.jpg, gallery/toko.jpg
 ├── .storybook/ (main.ts, preview.ts)
 ├── .github/workflows/ci.yml (lint→typecheck→build)
@@ -141,10 +139,10 @@ NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 
 ## 🔍 SEO & GEO
 
-- **JSON-LD:** `WebSite` (`AIS Frozen Food` + `alternateName`, `SearchAction`) + `Organization` + `LocalBusiness/GroceryStore` (`seo.tsx`), `FAQPage` (`faq.tsx`), `Product`+`Offer`/`AggregateOffer` per kartu + `ItemList` kolektif 8 poster (`page.tsx`), `BreadcrumbList` (`Beranda → #produk`), `WebPage` `speakable` `["#produk","#faq","h1"]`
-- **Routes:** `robots.ts` (allow:/ + 17 AI bots) + `sitemap.ts` (weekly `lastModified: now` + 11 images) + `public/llms.txt` (90 baris spec, absolute URLs + harga) + `public/llms-full.txt` + `manifest.json` (icons 512/192/48)
-- **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` `siteName: AIS Frozen Food` + `twitter` (keduanya reference static `/og-image.png` 1200×630), `geo.region ID-JT`, `verification.google` + `verification.other.msvalidate.01` (Bing Webmaster), `llms.txt` hint `<link alternate>`
-- **Favicon:** `icon.png 512 maskable` + `icon-192.png` + `icon-48.png` + `favicon.ico any` + `apple-icon.png 180` (next.config cache 86400, proxy exclude)
+- **JSON-LD:** `WebSite` (`AIS Frozen Food` + `alternateName`) + `Organization` + `LocalBusiness/GroceryStore` (`seo.tsx`, `logo ImageObject 512`), `FAQPage` (`faq.tsx`), `Product`+`Offer`/`AggregateOffer` per kartu + `ItemList` kolektif 8 poster (`page.tsx`), `BreadcrumbList` (`Beranda → #produk`), `WebPage` `speakable` `["#produk","#faq","h1"]`
+- **Routes:** `robots.ts` (allow:/ + 17 AI bots + host) + `sitemap.ts` (weekly `lastModified: now` + 12 images) + `public/llms.txt` + `public/llms-full.txt`
+- **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` `siteName: AIS Frozen Food` + `twitter` (keduanya reference static `/og-image.png` 1200×630), `geo.region ID-JT`, `verification.google` + `verification.other.msvalidate.01` (Bing Webmaster), `llms.txt` hint `<link alternate type=text/plain>`
+- **Favicon:** `icon.png 512` + `icon-192.png` + `icon-48.png` + `favicon.ico any` + `apple-icon.png 180` (next.config cache 86400, proxy exclude wildcard)
 - **Aksesibilitas:** `sr-only` brand di H1 + `sr-only` → visible `dt`, `aria-modal`/`role=dialog`, `aria-label` deskriptif per produk, `tabIndex` 0/-1, kontras AA
 - **Validasi:** Google Rich Results Test (WebSite/ItemList), Schema Validator, Search Console `ndkQkr...`, Bing Webmaster Tools (msvalidate.01), Favicon `google.com/s2/favicons?domain=`, OG Debugger (static `/og-image.png`)
 
@@ -152,9 +150,9 @@ NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 
 ## 🔒 Keamanan & Performa
 
-- **Headers `next.config.ts:8`:** CSP `default-src 'self'` + `script-src ... https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com https://va.vercel-scripts.com` + `connect-src ... https://vitals.vercel-insights.com` + `img-src` + `style-src`/`frame-src`/`font-src`, `X-Frame-Options SAMEORIGIN`, `X-Content-Type-Options nosniff`, `Referrer-Policy strict-origin-when-cross-origin`, `Permissions-Policy`, `Cache-Control` `public, max-age=31536000, immutable` untuk `/products/*` & `/gallery/*`
+- **Headers `next.config.ts:8`:** CSP `default-src 'self'` + `script-src ... https://www.google.com https://maps.googleapis.com https://va.vercel-scripts.com` + `connect-src ... https://vitals.vercel-insights.com` + `img-src` + `style-src`/`frame-src`/`font-src`, `X-Frame-Options SAMEORIGIN`, `X-Content-Type-Options nosniff`, `Referrer-Policy strict-origin-when-cross-origin`, `Permissions-Policy`, `Cache-Control` `public, max-age=31536000, immutable` untuk `/products/*` & `/gallery/*`, `max-age=86400` untuk `icon*/logo/og-image`, `max-age=3600` untuk `llms.txt`
 - **Images:** `qualities [60,85]` + `formats avif/webp`, hero `priority` + `fetchPriority high`
-- **Fonts:** `next/font` `display:swap` (preload default) + `preconnect` wa.me/google/fonts.gstatic + `static.fonts.githubusercontent.com`
+- **Fonts:** `next/font` `display:swap` (preload default) + `dns-prefetch` wa.me/google
 - **Maps:** GMaps iframe `IntersectionObserver` lazy (200px) + `loading="lazy"` + `referrerPolicy="strict-origin-when-cross-origin"` + `allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"`
 - **Proxy:** 308 ke `NEXT_PUBLIC_SITE_URL` host kanonik, skip localhost, enforce https
 - **Web Vitals:** `components/web-vitals.tsx` `useReportWebVitals` budgets LCP 2.5s CLS 0.1, `track` ke Vercel Analytics/gtag

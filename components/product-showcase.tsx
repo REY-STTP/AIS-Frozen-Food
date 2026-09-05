@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
-import Script from "next/script";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
@@ -249,8 +248,7 @@ export function ProductShowcase() {
                         <span className="ml-1 text-xs font-normal text-ink-muted">/ pack</span>
                       </p>
 
-                      <Script
-                        id={`product-jsonld-${g.imageNo}`}
+                      <script
                         type="application/ld+json"
                         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                       />

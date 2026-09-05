@@ -60,5 +60,4 @@
 - [Sitemap](https://www.ais-frozen-food.web.id/sitemap.xml)
 - [Robots](https://www.ais-frozen-food.web.id/robots.txt)
 - [LLMs Full — konteks lengkap](https://www.ais-frozen-food.web.id/llms-full.txt)
-- [Manifest](https://www.ais-frozen-food.web.id/manifest.json)
-- [OG Image](https://www.ais-frozen-food.web.id/opengraph-image?v=2)
+- [OG Image](https://www.ais-frozen-food.web.id/og-image.png)

@@ -18,7 +18,15 @@ export function LocalBusinessJsonLd() {
     priceRange: "$$",
     currenciesAccepted: "IDR",
     paymentAccepted: "Cash, QRIS, Transfer Bank",
-    logo: `${SITE}/logo.png`,
+    logo: {
+      "@type": "ImageObject",
+      "@id": `${SITE}/#logo`,
+      url: `${SITE}/logo.png`,
+      contentUrl: `${SITE}/logo.png`,
+      width: 512,
+      height: 512,
+      caption: business.name,
+    },
     image: Array.from(new Set(products.map((p) => `${SITE}${p.image}`))),
     address: {
       "@type": "PostalAddress",
@@ -51,6 +59,7 @@ export function LocalBusinessJsonLd() {
       },
     ],
     sameAs: [business.tiktokUrl, business.mapsUrl],
+    hasMap: business.mapsUrl,
   };
 
   return (
@@ -68,14 +77,31 @@ export function OrganizationJsonLd() {
     "@id": `${SITE}/#organization`,
     name: business.name,
     url: SITE,
-    logo: `${SITE}/logo.png`,
+    logo: {
+      "@type": "ImageObject",
+      "@id": `${SITE}/#logo`,
+      url: `${SITE}/logo.png`,
+      contentUrl: `${SITE}/logo.png`,
+      width: 512,
+      height: 512,
+      caption: business.name,
+    },
+    image: {
+      "@type": "ImageObject",
+      "@id": `${SITE}/#image`,
+      url: `${SITE}/logo.png`,
+      contentUrl: `${SITE}/logo.png`,
+      width: 512,
+      height: 512,
+      caption: business.name,
+    },
     sameAs: [business.tiktokUrl, business.mapsUrl],
     contactPoint: {
       "@type": "ContactPoint",
       telephone: `+${WHATSAPP_NUMBER}`,
       contactType: "customer service",
       areaServed: "ID",
-      availableLanguage: ["id"],
+      availableLanguage: ["id-ID"],
     },
   };
   return (
@@ -98,11 +124,6 @@ export function WebSiteJsonLd() {
       "Toko frozen food di Margorejo, Pati — dimsum, lumer, cilok & cireng, saus mentai. Ambil di toko atau pesan antar Pati–Kudus.",
     publisher: { "@id": `${SITE}/#organization` },
     inLanguage: "id-ID",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE}/#produk?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
   return (
     <script

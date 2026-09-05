@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Script from "next/script";
 import { motion, useReducedMotion } from "motion/react";
 import { categories, featuredProducts, type CategoryId } from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
@@ -124,8 +123,7 @@ export function FeaturedProducts() {
                   Tanya {p.name} →
                 </a>
 
-                <Script
-                  id={`featured-jsonld-${p.id}`}
+                <script
                   type="application/ld+json"
                   dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />

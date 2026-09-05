@@ -2,11 +2,11 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const lastModified = new Date();
   return [
     {
       url: SITE_URL,
-      lastModified: now,
+      lastModified,
       changeFrequency: "weekly",
       priority: 1,
       images: [
@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         `${SITE_URL}/products/produk-8.jpg`,
         `${SITE_URL}/gallery/toko.jpg`,
         `${SITE_URL}/logo.png`,
+        `${SITE_URL}/og-image.png`,
       ],
     },
   ];

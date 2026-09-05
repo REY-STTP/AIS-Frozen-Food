@@ -47,9 +47,13 @@ export function useAB<E extends ExperimentId>(experimentId: E, defaultVariant: V
   return variant;
 }
 
-// helper untuk tracking (console + future analytics)
+// helper untuk tracking (console + Vercel Analytics)
 export function trackABView(experimentId: ExperimentId, variant: string) {
   if (typeof window !== "undefined") {
-    console.debug(`[AB] view ${experimentId}=${variant}`);
+    if (process.env.NODE_ENV !== "production") console.debug(`[AB] view ${experimentId}=${variant}`);
+    try {
+      const va = (window as unknown as { va?: { track?: (n: string, p?: Record<string, string>) => void } }).va;
+      va?.track?.("ab_view", { experiment: experimentId, variant });
+    } catch {}
   }
 }
