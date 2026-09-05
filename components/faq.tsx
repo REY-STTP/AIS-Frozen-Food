@@ -64,34 +64,43 @@ export function Faq() {
             const isOpen = open === i;
             return (
               <div key={item.q} className="overflow-hidden rounded-2xl border border-sand-300 bg-white">
-                <button
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left font-display text-lg font-bold text-espresso-800 transition-colors hover:text-cocoa-600"
-                >
-                  {item.q}
-                  <motion.span
-                    aria-hidden
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
-                    className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-cocoa-100 text-cocoa-600"
+                <dt className="m-0">
+                  <button
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${i}`}
+                    id={`faq-question-${i}`}
+                    className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left font-display text-lg font-bold text-espresso-800 transition-colors hover:text-cocoa-600"
                   >
-                    +
-                  </motion.span>
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={reduce ? false : { height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
-                      className="overflow-hidden"
+                    {item.q}
+                    <motion.span
+                      aria-hidden
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-cocoa-100 text-cocoa-600"
                     >
-                      <p className="px-5 pb-5 text-sm leading-relaxed text-espresso-700">{item.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      +
+                    </motion.span>
+                  </button>
+                </dt>
+                <dd className="m-0">
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={reduce ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
+                        className="overflow-hidden"
+                        id={`faq-answer-${i}`}
+                        role="region"
+                        aria-labelledby={`faq-question-${i}`}
+                      >
+                        <p className="px-5 pb-5 text-sm leading-relaxed text-espresso-700">{item.a}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </dd>
               </div>
             );
           })}

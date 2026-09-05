@@ -81,7 +81,7 @@ export function SocialProof() {
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
               className="flex min-h-44 flex-col rounded-2xl border border-sand-300 bg-white p-6 shadow-sm"
             >
-              <div className="flex gap-1 text-amber-500" aria-label={`Rating ${t.rating} dari 5`}>
+              <div className="flex gap-1 text-amber-500" role="img" aria-label={`Rating ${t.rating} dari 5`}>
                 {Array.from({ length: t.rating }).map((_, j) => (
                   <Star key={j} size={16} weight="fill" aria-hidden />
                 ))}
