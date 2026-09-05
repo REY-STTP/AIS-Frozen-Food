@@ -56,7 +56,7 @@
 
 **Dependencies:** Next.js 16 (App Router, Turbopack), React 19, Motion 11, @phosphor-icons/react 2
 **Dev:** TypeScript 5, Tailwind CSS v4 + @tailwindcss/postcss, ESLint 9 + eslint-config-next, Storybook (`.storybook/`, `whatsapp-button.stories.tsx`)
-**Lain:** Plausible analytics, Sentry stub (`instrumentation.ts`), next/og OG image, next/web-vitals CWV budgets
+**Lain:** Vercel Analytics (free tier) + @vercel/analytics, next/og OG image, next/web-vitals CWV budgets
 
 ---
 
@@ -82,17 +82,14 @@ AIS-Frozen-Food/
 │   ├── seo.tsx (LocalBusiness/Organization/WebSite + alternateName), faq.tsx (FAQPage), navbar.tsx, footer.tsx ...
 ├── lib/
 │   ├── business.ts (mapsUrl/mapsEmbed pb terbaru + geo -6.785022493212046,110.98350267367005), products.ts, site.ts (SITE_URL), whatsapp.ts
-│   ├── design-tokens.ts, utils.ts (cn + validateEnv), analytics.ts (track), ab.ts (useAB), catalog.ts (Meta API stub), sentry.ts
+│   ├── design-tokens.ts, utils.ts (cn + validateEnv), analytics.ts (track), ab.ts (useAB), catalog.ts (Meta API stub)
 ├── public/
 │   ├── logo.png, icon.png + icon-192.png + icon-48.png, og-image.png (1200×630 static OG/Twitter), manifest.json (short_name AIS Frozen Food, icons 512/192/48), sw.js, llms.txt (90 baris spec, absolute URLs) + llms-full.txt
 │   ├── products/produk-1…8.jpg, gallery/toko.jpg
-├── docs/
-│   ├── API.md (rencana /api/products, /inquiry, /catalog/sync) 
-│   └── social-assets.md (banner sizes)
 ├── .storybook/ (main.ts, preview.ts)
 ├── .github/workflows/ci.yml (lint→typecheck→build)
-├── next.config.ts (images avif/webp, CSP + plausible, security headers, cache-control)
-├── instrumentation.ts (Sentry stub)
+├── next.config.ts (images avif/webp, CSP + Vercel Analytics, security headers, cache-control)
+├── instrumentation.ts
 └── .env.example / .env.local
 ```
 
@@ -135,8 +132,6 @@ export const WHATSAPP_NUMBER="6285226122121";
 ```ini
 NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 # WHATSAPP_TOKEN=... (catalog sync)
-# SENTRY_DSN=... (Sentry)
-# NEXT_PUBLIC_PLAUSIBLE_DOMAIN=...
 ```
 `lib/site.ts` fallback `https://www.ais-frozen-food.web.id`. Selalu `www` agar `proxy.ts` 308 konsisten. Google verification di `app/layout.tsx` `verification.google` + Bing verification `msvalidate.01` via `verification.other`.
 
@@ -157,13 +152,13 @@ NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 
 ## 🔒 Keamanan & Performa
 
-- **Headers `next.config.ts:8`:** CSP `default-src 'self'` + `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com https://plausible.io` + `connect-src ... https://plausible.io` + `img-src ... https://*.gstatic.com` + `style-src`/`frame-src`/`font-src`, `X-Frame-Options SAMEORIGIN`, `X-Content-Type-Options nosniff`, `Referrer-Policy strict-origin-when-cross-origin`, `Permissions-Policy`, `Cache-Control` `public, max-age=31536000, immutable` untuk `/products/*` & `/gallery/*`
+- **Headers `next.config.ts:8`:** CSP `default-src 'self'` + `script-src ... https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com https://va.vercel-scripts.com` + `connect-src ... https://vitals.vercel-insights.com` + `img-src` + `style-src`/`frame-src`/`font-src`, `X-Frame-Options SAMEORIGIN`, `X-Content-Type-Options nosniff`, `Referrer-Policy strict-origin-when-cross-origin`, `Permissions-Policy`, `Cache-Control` `public, max-age=31536000, immutable` untuk `/products/*` & `/gallery/*`
 - **Images:** `qualities [60,85]` + `formats avif/webp`, hero `priority` + `fetchPriority high`
-- **Fonts:** `next/font` `display:swap` (preload default) + `preconnect` wa.me/google/fonts.gstatic + `static.fonts.githubusercontent.com` + `dns-prefetch plausible.io`
+- **Fonts:** `next/font` `display:swap` (preload default) + `preconnect` wa.me/google/fonts.gstatic + `static.fonts.githubusercontent.com`
 - **Maps:** GMaps iframe `IntersectionObserver` lazy (200px) + `loading="lazy"` + `referrerPolicy="strict-origin-when-cross-origin"` + `allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"`
 - **Proxy:** 308 ke `NEXT_PUBLIC_SITE_URL` host kanonik, skip localhost, enforce https
-- **Web Vitals:** `components/web-vitals.tsx` `useReportWebVitals` budgets LCP 2.5s CLS 0.1, `track` ke Plausible/gtag
-- **Analytics:** `lib/analytics.ts` `trackWhatsAppClick`/`trackTelClick` di `WhatsAppButton` + `floating-whatsapp`
+- **Web Vitals:** `components/web-vitals.tsx` `useReportWebVitals` budgets LCP 2.5s CLS 0.1, `track` ke Vercel Analytics/gtag
+- **Analytics:** `@vercel/analytics` free tier (`<Analytics />` di `layout.tsx`) + `lib/analytics.ts` `trackWhatsAppClick`/`trackTelClick` di `WhatsAppButton` + `floating-whatsapp`
 
 ---
 

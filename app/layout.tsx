@@ -9,6 +9,7 @@ import { SITE_URL, BING_SITE_VERIFICATION } from "@/lib/site";
 import { WebVitals } from "@/components/web-vitals";
 import { CookieConsent } from "@/components/cookie-consent";
 import { PwaRegister } from "@/components/pwa-register";
+import { Analytics } from "@vercel/analytics/react";
 
 const SITE = SITE_URL;
 
@@ -120,16 +121,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://static.fonts.githubusercontent.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://plausible.io" />
         <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM context" />
         <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM full context" />
-        {/* Plausible analytics — ganti data-domain ke domain produksi */}
-        <Script
-          defer
-          data-domain={new URL(SITE).hostname}
-          src="https://plausible.io/js/script.js"
-          strategy="afterInteractive"
-        />
       </head>
       <body className="antialiased overflow-x-hidden">
         <a
@@ -146,6 +139,7 @@ export default function RootLayout({
         <WebVitals />
         <CookieConsent />
         <PwaRegister />
+        <Analytics />
         <Script
           id="breadcrumb-jsonld"
           type="application/ld+json"

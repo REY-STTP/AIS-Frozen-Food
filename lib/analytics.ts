@@ -7,14 +7,6 @@ export function track(event: EventName, props?: Record<string, string | number>)
     console.debug(`[analytics] ${event}`, props);
   }
 
-  // Plausible (jika ada)
-  const plausible = (window as unknown as { plausible?: (event: string, opts?: { props?: Record<string, string | number> }) => void }).plausible;
-  if (typeof plausible === "function") {
-    try {
-      plausible(event, props ? { props } : undefined);
-    } catch {}
-  }
-
   // gtag (jika ada)
   const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
   if (typeof gtag === "function") {
