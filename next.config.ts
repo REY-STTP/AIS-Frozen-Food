@@ -13,11 +13,17 @@ const csp = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+  },
   images: {
     qualities: [60, 85],
     formats: ["image/avif", "image/webp"],
   },
   allowedDevOrigins: ["192.168.100.12", "192.168.1.158"],
+  experimental: {
+    optimizePackageImports: ["motion", "@phosphor-icons/react"],
+  },
   async headers() {
     return [
       {

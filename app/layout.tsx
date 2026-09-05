@@ -116,11 +116,10 @@ export default function RootLayout({
       className={`${playfair.variable} ${poppins.variable}`}
     >
       <head>
-        <link rel="preconnect" href="https://wa.me" />
-        <link rel="preconnect" href="https://www.google.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://static.fonts.githubusercontent.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="dns-prefetch" href="https://www.google.com" />
         <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM context" />
         <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM full context" />
       </head>
