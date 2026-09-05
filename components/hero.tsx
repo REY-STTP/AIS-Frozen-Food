@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { Snowflake } from "@phosphor-icons/react/dist/ssr";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { WA_MESSAGES, waLink } from "@/lib/whatsapp";
 import { business } from "@/lib/business";
@@ -45,11 +44,6 @@ export function Hero() {
 
         {/* Overlay content */}
         <div className="relative z-10 mx-auto flex min-h-[640px] max-w-3xl flex-col items-center justify-center px-4 py-6 text-center md:min-h-0 md:h-full md:py-0">
-          <span className="inline-flex items-center gap-2 rounded-full border border-cream-100/30 bg-espresso-950/40 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] text-cream-100 backdrop-blur-sm">
-            <Snowflake size={14} weight="fill" aria-hidden />
-            {business.hours}
-          </span>
-
           <h1 className="mt-5 font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
             <span className="sr-only">AIS Frozen Food — </span>Frozen Food Favorit untuk{" "}
             <em className="italic text-cocoa-200">Rumah &amp; Usaha</em>

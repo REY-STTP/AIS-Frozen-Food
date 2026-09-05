@@ -26,7 +26,7 @@ export function FloatingWhatsApp() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={reduce ? undefined : { opacity: 0, scale: 0.8, y: 8 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed right-5 z-40 bottom-[calc(6rem+env(safe-area-inset-bottom))] md:bottom-7 md:right-7"
+          className="fixed right-5 z-40 bottom-[calc(1.5rem+env(safe-area-inset-bottom))] md:bottom-7 md:right-7"
         >
           <div className="flex flex-col items-center gap-2">
             <Link

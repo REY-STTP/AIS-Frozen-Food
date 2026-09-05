@@ -2,13 +2,12 @@ import type { NextConfig } from "next";
 
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com https://unpkg.com https://plausible.io",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://maps.googleapis.com https://plausible.io",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
-  "img-src 'self' data: blob: https: https://*.google.com https://*.gstatic.com https://*.googleapis.com https://*.basemaps.cartocdn.com https://basemaps.cartocdn.com",
+  "img-src 'self' data: blob: https: https://*.google.com https://*.gstatic.com https://*.googleapis.com",
   "frame-src 'self' https://www.google.com https://maps.google.com",
-  "connect-src 'self' https://wa.me https://www.google.com https://*.googleapis.com https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com https://unpkg.com https://plausible.io",
-  "worker-src 'self' blob: https://unpkg.com",
+  "connect-src 'self' https://wa.me https://www.google.com https://*.googleapis.com https://plausible.io",
   "base-uri 'self'",
   "form-action 'self'",
 ].join("; ");

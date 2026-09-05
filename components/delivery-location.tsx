@@ -6,7 +6,6 @@ import { MapPin, Storefront, Truck, Clock, ArrowUpRight } from "@phosphor-icons/
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { business } from "@/lib/business";
 import { WA_MESSAGES, waLink } from "@/lib/whatsapp";
-import { Map, MapMarker, MarkerContent, MarkerPopup, MapControls } from "@/components/ui/map";
 
 export function DeliveryLocation() {
   const reduce = useReducedMotion();
@@ -33,8 +32,6 @@ export function DeliveryLocation() {
     io.observe(el);
     return () => io.disconnect();
   }, []);
-
-  const center: [number, number] = [business.geo.lng, business.geo.lat];
 
   return (
     <section
@@ -100,9 +97,10 @@ export function DeliveryLocation() {
               Tanya Lokasi
             </WhatsAppButton>
             <a
-              href={business.mapsUrl}
+              href={business.mapsDirections}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Petunjuk arah ke AIS Frozen Food di Google Maps"
               className="inline-flex h-11 w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border-2 border-cocoa-600 px-3 text-xs font-bold uppercase tracking-wider text-cocoa-600 transition-all duration-300 hover:bg-cocoa-600 hover:text-cream-50 sm:gap-2 sm:px-5 sm:text-sm"
             >
               <span className="whitespace-nowrap">Petunjuk Arah</span>
@@ -111,7 +109,7 @@ export function DeliveryLocation() {
           </div>
         </motion.div>
 
-        {/* Map column — mapcn */}
+        {/* Map column — GMaps iframe */}
         <motion.div
           ref={mapRef as unknown as React.RefObject<HTMLDivElement>}
           initial={reduce ? false : { opacity: 0, y: 20 }}
@@ -121,63 +119,16 @@ export function DeliveryLocation() {
           className="relative h-90 min-h-90 flex-1 overflow-hidden rounded-4xl border border-sand-300 bg-cream-50 shadow-md lg:h-140 lg:min-h-140"
         >
           {mapVisible ? (
-            <div style={{ position: "absolute", inset: 0 }}>
-              <Map center={center} zoom={16} className="h-full w-full">
-              <MapMarker longitude={business.geo.lng} latitude={business.geo.lat}>
-                <MarkerContent>
-                  <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-cocoa-600 shadow-lg ring-4 ring-white">
-                    <Storefront size={20} weight="fill" className="text-white" aria-hidden />
-                    <span
-                      className="absolute inset-0 -z-10 animate-ping rounded-full bg-cocoa-600 opacity-20"
-                      aria-hidden
-                    />
-                  </div>
-                </MarkerContent>
-                <MarkerPopup className="bg-transparent! border-0! p-0! shadow-none! rounded-none! max-w-none!">
-                  <div className="w-72 overflow-hidden rounded-2xl border border-sand-200 bg-white shadow-xl">
-                    <div className="bg-cocoa-600 px-4 py-3">
-                      <p className="text-[11px] font-bold uppercase tracking-widest text-cream-50/80">
-                        Toko Kami
-                      </p>
-                      <h3 className="font-display text-[15px] font-bold leading-tight text-white">
-                        {business.name}
-                      </h3>
-                    </div>
-                    <div className="space-y-3 p-4">
-                      <p className="flex items-start gap-2 text-sm leading-relaxed text-espresso-700">
-                        <MapPin size={16} className="mt-0.5 shrink-0 text-cocoa-600" aria-hidden />
-                        {business.addressFull}
-                      </p>
-                      <p className="flex items-center gap-2 text-xs text-ink-muted">
-                        <Clock size={14} className="shrink-0 text-cocoa-600" aria-hidden />
-                        {business.hours}
-                      </p>
-                      <div className="flex gap-2 pt-1">
-                        <a
-                          href={business.mapsUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-cocoa-600 px-3 py-2.5 text-xs font-bold uppercase tracking-wider text-cream-50 transition hover:bg-cocoa-700"
-                        >
-                          Petunjuk Arah
-                          <ArrowUpRight size={14} aria-hidden />
-                        </a>
-                        <a
-                          href={waLink(WA_MESSAGES.location)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center rounded-full border border-cocoa-600 px-4 py-2.5 text-xs font-bold text-cocoa-600 transition hover:bg-cocoa-50"
-                        >
-                          Chat
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </MarkerPopup>
-              </MapMarker>
-              <MapControls position="bottom-right" showZoom showCompass={false} showLocate={false} />
-              </Map>
-            </div>
+            <iframe
+              title="Peta lokasi toko AIS Frozen Food di Margorejo, Pati, Jawa Tengah"
+              src={business.mapsEmbed}
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full"
+              style={{ border: 0 }}
+            />
           ) : (
             <div className="absolute inset-0 grid place-items-center bg-sand-200">
               <span className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-espresso-700 shadow">
