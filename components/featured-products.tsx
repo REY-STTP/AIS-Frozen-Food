@@ -54,7 +54,7 @@ export function FeaturedProducts() {
             const offer = buildOffer({
               price,
               priceCurrency: currency,
-              url: `${SITE_URL}/#produk`,
+              url: `${SITE_URL}/#produk-${p.id}`,
             });
             const jsonLd = {
               "@context": "https://schema.org",
@@ -75,6 +75,7 @@ export function FeaturedProducts() {
             return (
               <motion.article
                 key={p.id}
+                id={`produk-${p.id}`}
                 variants={{
                   hidden: { opacity: 0, y: 12 },
                   show: {
@@ -83,7 +84,7 @@ export function FeaturedProducts() {
                     transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
                   },
                 }}
-                className="group rounded-2xl bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md"
+                className="group scroll-mt-24 rounded-2xl bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md"
               >
                 <div className="relative mb-4 h-56 overflow-hidden rounded-xl lg:h-64">
                   <Image

@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
-import { categories, posterGroupsByCategory, type CategoryId } from "@/lib/products";
+import { categories, posterGroupsByCategory, posterGroupSlug, type CategoryId } from "@/lib/products";
 import { WA_MESSAGES, waLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
@@ -159,7 +159,8 @@ export function ProductShowcase() {
                 return (
                   <article
                     key={g.imageNo}
-                    className="group flex w-full flex-col overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+                    id={`produk-${posterGroupSlug(g.title)}`}
+                    className="group flex w-full scroll-mt-24 flex-col overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
                   >
                     <div className="relative aspect-3/4 overflow-hidden border-b border-sand-300/70">
                       <Image

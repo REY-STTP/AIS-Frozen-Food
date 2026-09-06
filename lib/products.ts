@@ -361,3 +361,11 @@ export const posterGroups: PosterGroup[] = [
 export function posterGroupsByCategory(id: CategoryId): PosterGroup[] {
   return posterGroups.filter((g) => g.category === id);
 }
+
+/** URL-safe slug untuk anchor per grup poster, mis. "Dimsum Klasik" → "dimsum-klasik". */
+export function posterGroupSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}

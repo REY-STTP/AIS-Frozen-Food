@@ -12,7 +12,7 @@ import { Footer } from "@/components/footer";
 import { ExitIntentPopup } from "@/components/exit-intent-popup";
 import { SocialProof } from "@/components/social-proof";
 import { InquiryForm } from "@/components/inquiry-form";
-import { posterGroups } from "@/lib/products";
+import { posterGroups, posterGroupSlug } from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
 import { absoluteImage, buildAggregateOffer, buildOffer, AGGREGATE_RATING } from "@/lib/structured-data";
 
@@ -24,15 +24,17 @@ export default function HomePage() {
     name: "Katalog AIS Frozen Food",
     description: "Daftar produk AIS Frozen Food — dimsum, singkong keju, pisang coklat lumer, cilok & cireng, pelengkap",
     numberOfItems: posterGroups.length,
-    itemListElement: posterGroups.map((g, index) => ({
+    itemListElement: posterGroups.map((g, index) => {
+      const productUrl = `${SITE_URL}/#produk-${posterGroupSlug(g.title)}`;
+      return {
       "@type": "ListItem",
       position: index + 1,
       name: g.title,
-      url: `${SITE_URL}/#produk`,
+      url: productUrl,
       item: {
         "@type": "Product",
         name: g.title,
-        url: `${SITE_URL}/#produk`,
+        url: productUrl,
         description: g.description,
         image: absoluteImage(`/products/produk-${g.imageNo}.jpg`),
         sku: `ISI-${g.imageNo}`,
@@ -44,16 +46,17 @@ export default function HomePage() {
                 lowPrice: g.lowPrice,
                 highPrice: g.highPrice,
                 priceCurrency: g.priceCurrency ?? "IDR",
-                url: `${SITE_URL}/#produk`,
+                url: productUrl,
                 offerCount: g.variants.length || 1,
               })
             : buildOffer({
                 price: g.price ?? 35000,
                 priceCurrency: g.priceCurrency ?? "IDR",
-                url: `${SITE_URL}/#produk`,
+                url: productUrl,
               }),
       },
-    })),
+      };
+    }),
   };
 
   return (
