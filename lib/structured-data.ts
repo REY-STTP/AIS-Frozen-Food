@@ -72,12 +72,6 @@ export function buildOffer({
     url,
     priceCurrency,
     price: priceStr,
-    priceSpecification: {
-      "@type": "UnitPriceSpecification",
-      price: priceStr,
-      priceCurrency,
-      priceType: "https://schema.org/SalePrice",
-    },
     itemCondition: "https://schema.org/NewCondition",
     availability,
     seller: {

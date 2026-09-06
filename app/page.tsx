@@ -27,10 +27,12 @@ export default function HomePage() {
     itemListElement: posterGroups.map((g, index) => ({
       "@type": "ListItem",
       position: index + 1,
+      name: g.title,
       url: `${SITE_URL}/#produk`,
       item: {
         "@type": "Product",
         name: g.title,
+        url: `${SITE_URL}/#produk`,
         description: g.description,
         image: absoluteImage(`/products/produk-${g.imageNo}.jpg`),
         sku: `ISI-${g.imageNo}`,
