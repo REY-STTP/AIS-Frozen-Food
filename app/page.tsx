@@ -29,8 +29,6 @@ export default function HomePage() {
       return {
       "@type": "ListItem",
       position: index + 1,
-      name: g.title,
-      url: productUrl,
       item: {
         "@type": "Product",
         name: g.title,
