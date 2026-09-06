@@ -39,12 +39,12 @@
 | 🏷️ **Kenapa Memilih Kami** | 3 kartu arch + hover lift, `prefers-reduced-motion` |
 | 🍱 **Katalog Produk** | Tab kategori + kartu per poster + chip varian, `Product`+`Offer`/`AggregateOffer` per item + `ItemList` `Product` kolektif (server, 8 poster), skeleton `animate-pulse` saat ganti tab, badge Fresh/Stok, `aria-label` deskriptif |
 | ⭐ **Produk Unggulan** | Grid 4 kolom 8 item, `Product` JSON-LD, Fresh badge, link WA `aria-label` |
-| 💬 **Social Proof** | 3 testimoni rating 5 (layout `flex-col flex-1` agar nama tidak geser karena panjang kalimat) + reseller logos + stats 4.9/5 |
+| 💬 **Social Proof** | 2 kutipan asli Google Maps (atribusi + link listing) + reseller logos + stats 5.0/5, 500+/bln, 50+ reseller |
 | 📝 **Inquiry Form Mini** | `components/inquiry-form.tsx` — nama/WA/catatan → auto `wa.me` link |
 | 🎯 **Exit-Intent** | `exit-intent-popup.tsx` (mousemove top ≤8px + scroll-up >60px, sessionStorage) — *StickyCtaBar dihapus* |
 | 🤝 **Reseller & Grosir CTA** | Banner espresso program reseller |
 | 📍 **Lokasi & Maps (GMaps)** | Info kiri + Maps kanan lazy `IntersectionObserver` 200px via `<iframe src={business.mapsEmbed}>` pb terbaru, `loading="lazy"` + `referrerPolicy="strict-origin-when-cross-origin"` + `allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"`, wrapper `h-90 lg:h-140` fix mobile, placeholder `Memuat peta…`, `geo` sinkron |
-| 💬 **Smart WhatsApp** | `WhatsAppButton` reusable + `floating-whatsapp.tsx` (WA + `tel:+6285226122121` fallback) + tracking `lib/analytics.ts` (Plausible/gtag/dataLayer), tombol lokasi `grid grid-cols-2` kiri-kanan di mobile |
+| 💬 **Smart WhatsApp** | `WhatsAppButton` reusable + `floating-whatsapp.tsx` (WA + `tel:+6285226122121` fallback) + tracking `lib/analytics.ts` (Vercel track + gtag/dataLayer fallback), tombol lokasi `grid grid-cols-2` kiri-kanan di mobile |
 | ❓ **FAQ** | Accordion `<details>` + `FAQPage` JSON-LD |
 | 🛡️ **Error Handling** | `app/error.tsx` + `app/global-error.tsx` (`html/body` wrapper) + `app/not-found.tsx` 404 custom (kategori + WA) |
 | 🍪 **Cookie Consent** | `cookie-consent.tsx` localStorage `ais-cookie-consent` |
@@ -69,7 +69,7 @@ AIS-Frozen-Food/
 │   ├── globals.css           # Tailwind v4 tokens cream/cocoa/espresso
 │   ├── error.tsx / global-error.tsx / not-found.tsx
 │   ├── robots.ts             # allow:/ disallow /api /login /admin/draft + 17 AI bots (GPTBot/OAI-SearchBot/GoogleOther/Claude/Perplexity/Applebot/FacebookBot/cohere-ai/DuckAssistBot...), host: www.ais-frozen-food.web.id
-│   └── sitemap.ts            # weekly + lastModified: now + images 12 (8 produk + toko + logo + og-image), hanya / (hash #produk tidak di-sitemap)
+│   └── sitemap.ts            # weekly + lastModified dinamis (git → mtime → fallback), routes /, llms.txt, llms-full.txt + images 11 (8 produk + toko + logo + og-image)
 ├── proxy.ts                  # 308 redirect ke NEXT_PUBLIC_SITE_URL host kanonik (www)
 ├── components/
 │   ├── ui/whatsapp-button.tsx + .stories.tsx
@@ -140,7 +140,7 @@ NEXT_PUBLIC_SITE_URL=https://www.domain-anda.com
 ## 🔍 SEO & GEO
 
 - **JSON-LD:** `WebSite` (`AIS Frozen Food` + `alternateName`) + `Organization` + `LocalBusiness/GroceryStore` (`seo.tsx`, `logo ImageObject 512`), `FAQPage` (`faq.tsx`), `Product`+`Offer`/`AggregateOffer` per kartu + `ItemList` kolektif 8 poster (`page.tsx`), `BreadcrumbList` (`Beranda → #produk`), `WebPage` `speakable` `["#produk","#faq","h1"]`
-- **Routes:** `robots.ts` (allow:/ + 17 AI bots + host) + `sitemap.ts` (weekly `lastModified: now` + 12 images) + `public/llms.txt` + `public/llms-full.txt`
+- **Routes:** `robots.ts` (allow:/ + 17 AI bots + host) + `sitemap.ts` (weekly, `lastmod` dinamis git → mtime → fallback, 11 images, routes /, llms.txt, llms-full.txt) + `public/llms.txt` + `public/llms-full.txt`
 - **Meta:** `metadataBase: SITE_URL`, `alternates.canonical`, `openGraph` `siteName: AIS Frozen Food` + `twitter` (keduanya reference static `/og-image.png` 1200×630), `geo.region ID-JT`, `verification.google` + `verification.other.msvalidate.01` (Bing Webmaster), `llms.txt` hint `<link alternate type=text/plain>`
 - **Favicon:** `icon.png 512` + `icon-192.png` + `icon-48.png` + `favicon.ico any` + `apple-icon.png 180` (next.config cache 86400, proxy exclude wildcard)
 - **Aksesibilitas:** `sr-only` brand di H1 + `sr-only` → visible `dt`, `aria-modal`/`role=dialog`, `aria-label` deskriptif per produk, `tabIndex` 0/-1, kontras AA

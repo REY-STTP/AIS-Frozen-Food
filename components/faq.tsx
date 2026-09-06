@@ -35,7 +35,8 @@ const faqs = [
 ];
 
 export function Faq() {
-  const [open, setOpen] = useState<number | null>(null);
+  // Item pertama terbuka default agar jawaban ikut ter-SSR untuk crawler non-JS.
+  const [open, setOpen] = useState<number | null>(0);
   const reduce = useReducedMotion();
   const schema = {
     "@context": "https://schema.org",

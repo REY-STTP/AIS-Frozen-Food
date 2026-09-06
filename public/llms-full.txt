@@ -54,7 +54,7 @@ Q: Apakah menerima reseller/grosir? A: Ya, harga grosir hubungi WhatsApp.
 Q: Bagaimana cara memesan? A: Tekan tombol WhatsApp, kirim daftar produk.
 
 ## Fitur Situs
-- Katalog tab 5 kategori + produk unggulan 8 item + social proof rating 4.9/5 (127 review) + 50+ reseller
+- Katalog tab 5 kategori + produk unggulan 8 item + social proof rating 5,0/5 (3 ulasan Google Maps) + 50+ reseller
 - Form tanya stok → auto WhatsApp link
 - Peta embed lazy, topbar alamat, floating WhatsApp
 

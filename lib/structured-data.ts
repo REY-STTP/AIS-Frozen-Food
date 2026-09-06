@@ -42,25 +42,15 @@ export const MERCHANT_RETURN_POLICY = {
   returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
 };
 
+// ratingValue & reviewCount TERVERIFIKASI dari Google Maps listing (2026-09-06):
+// rating 5,0 dari 3 ulasan. Jika ulasan bertambah, update kedua angka + tampilkan
+// angka yang sama secara visible (social-proof).
 export const AGGREGATE_RATING = {
   "@type": "AggregateRating",
-  ratingValue: "4.9",
-  reviewCount: "127",
+  ratingValue: "5",
+  reviewCount: "3",
   bestRating: "5",
   worstRating: "1",
-};
-
-export const SAMPLE_REVIEW = {
-  "@type": "Review",
-  author: { "@type": "Person", name: "Pelanggan AIS Frozen Food - Pati" },
-  reviewRating: {
-    "@type": "Rating",
-    ratingValue: "5",
-    bestRating: "5",
-    worstRating: "1",
-  },
-  reviewBody:
-    "Frozen food segar, pengiriman cepat area Pati–Kudus, cocok untuk stok rumah dan reseller. Rasa dimsum dan pisang coklat lumer favorit keluarga.",
 };
 
 export function buildOffer({

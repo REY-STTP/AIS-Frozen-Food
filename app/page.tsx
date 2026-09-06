@@ -14,7 +14,7 @@ import { SocialProof } from "@/components/social-proof";
 import { InquiryForm } from "@/components/inquiry-form";
 import { posterGroups } from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
-import { absoluteImage, buildAggregateOffer, buildOffer, AGGREGATE_RATING, SAMPLE_REVIEW } from "@/lib/structured-data";
+import { absoluteImage, buildAggregateOffer, buildOffer, AGGREGATE_RATING } from "@/lib/structured-data";
 
 export default function HomePage() {
   const itemListJsonLd = {
@@ -27,6 +27,7 @@ export default function HomePage() {
     itemListElement: posterGroups.map((g, index) => ({
       "@type": "ListItem",
       position: index + 1,
+      url: `${SITE_URL}/#produk`,
       item: {
         "@type": "Product",
         name: g.title,
@@ -35,7 +36,6 @@ export default function HomePage() {
         sku: `ISI-${g.imageNo}`,
         brand: { "@type": "Brand", name: "AIS Frozen Food" },
         aggregateRating: AGGREGATE_RATING,
-        review: SAMPLE_REVIEW,
         offers:
           typeof g.lowPrice === "number" && typeof g.highPrice === "number" && g.lowPrice !== g.highPrice
             ? buildAggregateOffer({

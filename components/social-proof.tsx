@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { Star } from "@phosphor-icons/react/dist/ssr";
 import { useRef } from "react";
+import { business } from "@/lib/business";
 
 function CountUp({ value, suffix = "", decimals = 0 }: { value: number; suffix?: string; decimals?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -38,20 +39,19 @@ function CountUp({ value, suffix = "", decimals = 0 }: { value: number; suffix?:
   );
 }
 
+// Kutipan asli dari Google Maps listing (terverifikasi 2026-09-06, semua ★5).
+// Riska Dwi (★5 tanpa teks) terhitung di reviewCount, tidak dikutip.
 const testimonials = [
   {
-    name: "Siti — Pati",
-    text: "Dimsumnya enak, anak-anak suka. Pesan via WhatsApp dibalas cepat, bisa ambil di toko.",
+    name: "Adelia Putri",
+    meta: "Ulasan Google Maps · sebulan lalu",
+    text: "Dimsum terkomplet dan harga nya terjangkau ya di sini 🤗 terimakasih ka",
     rating: 5,
   },
   {
-    name: "Warung Bu Yani — Kudus",
-    text: "Ambil grosir untuk warung, harga cocok dan stok selalu ready. Langganan tiap minggu.",
-    rating: 5,
-  },
-  {
-    name: "Rina — Margorejo",
-    text: "Pisang lumernya lumer beneran, pengiriman ke rumah tepat waktu. Recommended!",
+    name: "Satriya Rini",
+    meta: "Ulasan Google Maps · 3 tahun lalu",
+    text: "Hasilnya bagus",
     rating: 5,
   },
 ] as const;
@@ -71,7 +71,7 @@ export function SocialProof() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3 md:items-stretch">
+        <div className="mx-auto mt-10 grid max-w-3xl gap-6 md:grid-cols-2 md:items-stretch">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}
@@ -90,6 +90,7 @@ export function SocialProof() {
               <p className="mt-4 border-t border-sand-100 pt-3 text-xs font-semibold uppercase tracking-wider text-cocoa-600">
                 {t.name}
               </p>
+              <p className="mt-1 text-[11px] text-espresso-700/70">{t.meta}</p>
             </motion.div>
           ))}
         </div>
@@ -112,7 +113,7 @@ export function SocialProof() {
         >
           <div>
             <div className="font-display text-2xl font-bold text-espresso-800">
-              <CountUp value={4.9} decimals={1} suffix="/5" />
+              <CountUp value={5} decimals={1} suffix="/5" />
             </div>
             <div className="text-xs uppercase tracking-wider text-cocoa-600">Rating pelanggan</div>
           </div>
@@ -131,6 +132,15 @@ export function SocialProof() {
             <div className="text-xs uppercase tracking-wider text-cocoa-600">Reseller aktif</div>
           </div>
         </motion.div>
+
+        <a
+          href={business.reviewsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 block text-center text-xs font-semibold text-cocoa-600 underline"
+        >
+          Berdasarkan 3 ulasan Google Maps — lihat semua
+        </a>
       </div>
     </section>
   );

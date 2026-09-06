@@ -14,7 +14,6 @@ export function track(event: EventName, props?: Record<string, string | number>)
   } catch {}
   // Fallback: @vercel/analytics track (dinamis, tidak break jika belum load)
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const mod = require("@vercel/analytics") as { track?: typeof track };
     if (mod?.track && mod.track !== track) mod.track(event, props as never);
   } catch {}

@@ -48,7 +48,7 @@
 
 ## Fitur Situs
 - [Katalog #produk](https://www.ais-frozen-food.web.id#produk): Tab 5 kategori, skeleton loading, urgency badge Fresh/Stok terbatas.
-- [Produk unggulan](https://www.ais-frozen-food.web.id#produk): 8 item FeaturedProducts + social proof 4.9/5 (127 review) + 50+ reseller.
+- [Produk unggulan](https://www.ais-frozen-food.web.id#produk): 8 item FeaturedProducts + social proof 5,0/5 (3 ulasan Google Maps) + 50+ reseller.
 - [Form tanya stok](https://www.ais-frozen-food.web.id#kontak): Nama/WA/catatan → auto link WhatsApp.
 - [Peta & alamat topbar](https://www.ais-frozen-food.web.id#lokasi): Lazy embed, floating WhatsApp.
 

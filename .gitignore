@@ -65,6 +65,7 @@ storybook.log
 coverage/
 .nyc_output/
 test-results/
+.playwright-mcp/
 playwright-report/
 junit.xml
 
@@ -75,6 +76,7 @@ junit.xml
 # Misc local & temp (non-production)
 .tmp/
 tmp/
+docs/
 .cache/
 .parcel-cache/
 .opencode/

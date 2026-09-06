@@ -6,7 +6,6 @@ import { categories, featuredProducts, type CategoryId } from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
 import {
   AGGREGATE_RATING,
-  SAMPLE_REVIEW,
   absoluteImage,
   buildOffer,
 } from "@/lib/structured-data";
@@ -55,7 +54,7 @@ export function FeaturedProducts() {
             const offer = buildOffer({
               price,
               priceCurrency: currency,
-              url: `${SITE_URL}/?produk=${p.id}#produk`,
+              url: `${SITE_URL}/#produk`,
             });
             const jsonLd = {
               "@context": "https://schema.org",
@@ -71,7 +70,6 @@ export function FeaturedProducts() {
               },
               offers: offer,
               aggregateRating: AGGREGATE_RATING,
-              review: SAMPLE_REVIEW,
             };
 
             return (

@@ -8,14 +8,6 @@ import Link from "next/link";
 import { categories, posterGroupsByCategory, type CategoryId } from "@/lib/products";
 import { WA_MESSAGES, waLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
-import { SITE_URL } from "@/lib/site";
-import {
-  AGGREGATE_RATING,
-  SAMPLE_REVIEW,
-  absoluteImage,
-  buildAggregateOffer,
-  buildOffer,
-} from "@/lib/structured-data";
 
 const formatPrice = (n: number) =>
   new Intl.NumberFormat("id-ID", {
@@ -162,53 +154,7 @@ export function ProductShowcase() {
                 const price = g.price ?? 35000;
                 const currency = g.priceCurrency ?? "IDR";
                 const imagePath = `/products/produk-${g.imageNo}.jpg`;
-                const slug = g.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-                const productUrl = `${SITE_URL}/?poster=${slug}#produk`;
                 const hasRange = typeof g.lowPrice === "number" && typeof g.highPrice === "number" && g.lowPrice !== g.highPrice;
-                const offer = hasRange
-                  ? buildAggregateOffer({
-                      lowPrice: g.lowPrice!,
-                      highPrice: g.highPrice!,
-                      priceCurrency: currency,
-                      url: productUrl,
-                      offerCount: g.variants.length || 1,
-                    })
-                  : buildOffer({
-                      price,
-                      priceCurrency: currency,
-                      url: productUrl,
-                    });
-
-                // For AggregateOffer Google still expects price/priceCurrency at top level for Product snippet — add lowPrice as price fallback
-                const offerForJsonLd = hasRange
-                  ? {
-                      ...offer,
-                      // Provide price for Product snippet validation (use lowPrice)
-                      price: String(g.lowPrice),
-                      priceSpecification: {
-                        "@type": "UnitPriceSpecification",
-                        price: String(g.lowPrice),
-                        priceCurrency: currency,
-                      },
-                    }
-                  : offer;
-
-                const jsonLd = {
-                  "@context": "https://schema.org",
-                  "@type": "Product",
-                  name: g.title,
-                  description: g.description,
-                  image: absoluteImage(imagePath),
-                  sku: `ISI-${g.imageNo}`,
-                  mpn: `ISI-${g.imageNo}`,
-                  brand: {
-                    "@type": "Brand",
-                    name: "AIS Frozen Food",
-                  },
-                  offers: offerForJsonLd,
-                  aggregateRating: AGGREGATE_RATING,
-                  review: SAMPLE_REVIEW,
-                };
 
                 return (
                   <article
@@ -247,11 +193,6 @@ export function ProductShowcase() {
                         {hasRange ? `${formatPrice(g.lowPrice!)} – ${formatPrice(g.highPrice!)}` : formatPrice(price)}
                         <span className="ml-1 text-xs font-normal text-ink-muted">/ pack</span>
                       </p>
-
-                      <script
-                        type="application/ld+json"
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-                      />
 
                       {g.variants.length > 0 && (
                         <>

@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
 import { business } from "@/lib/business";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { LocalBusinessJsonLd, OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo";
@@ -145,47 +144,47 @@ export default function RootLayout({
         <WebVitals />
         <CookieConsent />
         <Analytics />
-        <Script
-          id="breadcrumb-jsonld"
+        <script
           type="application/ld+json"
-        >
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Beranda",
-                "item": `${SITE}`
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Beranda",
+                  "item": `${SITE}`
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Produk",
+                  "item": `${SITE}/#produk`
+                }
+              ]
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "@id": `${SITE}/#webpage`,
+              url: SITE,
+              name: `${business.name} — ${business.tagline}`,
+              isPartOf: { "@id": `${SITE}/#website` },
+              speakable: {
+                "@type": "SpeakableSpecification",
+                cssSelector: ["#produk", "#faq", "h1"],
               },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Produk",
-                "item": `${SITE}/#produk`
-              }
-            ]
-          })}
-        </Script>
-        <Script
-          id="speakable-jsonld"
-          type="application/ld+json"
-        >
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "@id": `${SITE}/#webpage`,
-            url: SITE,
-            name: `${business.name} — ${business.tagline}`,
-            isPartOf: { "@id": `${SITE}/#website` },
-            speakable: {
-              "@type": "SpeakableSpecification",
-              cssSelector: ["#produk", "#faq", "h1"],
-            },
-            inLanguage: "id-ID",
-          })}
-        </Script>
+              inLanguage: "id-ID",
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
       </body>
     </html>
   );
